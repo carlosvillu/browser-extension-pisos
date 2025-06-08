@@ -3,6 +3,7 @@ import { Logger } from '../../infrastructure/logger';
 
 export interface IUrlAnalyzer {
   analyzeCurrentPage(): UrlAnalysisResult;
+  analyzeUrl(url: URL): UrlAnalysisResult;
   isIdealistaPropertyPage(): boolean;
 }
 
@@ -10,9 +11,13 @@ export class UrlAnalyzer implements IUrlAnalyzer {
   constructor(private logger: Logger) {}
 
   analyzeCurrentPage(): UrlAnalysisResult {
-    const url = window.location.href;
-    const pathname = window.location.pathname;
-    const searchParams = new URLSearchParams(window.location.search);
+    const url = new URL(window.location.href);
+    return this.analyzeUrl(url);
+  }
+
+  analyzeUrl(url: URL): UrlAnalysisResult {
+    const pathname = url.pathname;
+    const searchParams = url.searchParams;
     
     let searchType: 'venta' | 'alquiler' | null = null;
     if (pathname.includes('/venta-viviendas/')) {
@@ -23,9 +28,11 @@ export class UrlAnalyzer implements IUrlAnalyzer {
     
     const location = this.extractLocationFromUrl(pathname);
     const hasFilters = searchParams.toString().length > 0;
+    const isIdealista = url.hostname === 'www.idealista.com' && 
+                       (pathname.includes('/venta-viviendas/') || pathname.includes('/alquiler-viviendas/'));
     
     const result = {
-      isIdealista: this.isIdealistaPropertyPage(),
+      isIdealista,
       searchType,
       location,
       hasFilters
