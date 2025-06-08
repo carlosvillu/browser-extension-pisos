@@ -1,0 +1,184 @@
+# PRD - Extensión de Análisis de Inversión Inmobiliaria para Idealista
+
+## Resumen del Proyecto
+
+Desarrollo de una extensión de navegador que analiza automáticamente la rentabilidad de propiedades inmobiliarias en Idealista.com comparando precios de compra con potenciales ingresos por alquiler.
+
+## Objetivos
+
+- Detectar automáticamente páginas de búsqueda de Idealista para compra de viviendas
+- Analizar la rentabilidad comparando precios de compra vs. alquiler en la misma zona
+- Mostrar indicadores visuales de rentabilidad directamente en la página
+- Facilitar la toma de decisiones de inversión inmobiliaria
+
+## Alcance
+
+### URLs Objetivo
+- Búsquedas de compra: `https://www.idealista.com/venta-viviendas/*`
+- Búsquedas de alquiler: `https://www.idealista.com/alquiler-viviendas/*`
+
+### Funcionalidades Core
+1. Activación automática en páginas de Idealista
+2. Detección de tipo de búsqueda (compra vs alquiler)
+3. Análisis cruzado de rentabilidad
+4. Indicadores visuales en cada propiedad
+
+## Plan de Desarrollo
+
+### Fase 1: Configuración Base y Detección de Páginas
+**Estado: [x] Completado**
+
+#### Tarea 1.1: Configurar detección de dominio
+**Estado: [x] Completado**
+- [x] Subtarea 1.1.1: Actualizar manifest.json para incluir permisos de Idealista
+- [x] Subtarea 1.1.2: Configurar content script para activarse en idealista.com
+- [x] Subtarea 1.1.3: Implementar detección de URLs de búsqueda de viviendas
+
+#### Tarea 1.2: Identificar tipo de búsqueda
+**Estado: [x] Completado**
+- [x] Subtarea 1.2.1: Crear función para distinguir entre venta y alquiler
+- [x] Subtarea 1.2.2: Extraer parámetros de ubicación de la URL
+- [x] Subtarea 1.2.3: Validar detección con diferentes tipos de búsqueda
+
+#### Tarea 1.3: Estructura base de la extensión
+**Estado: [x] Completado**
+- [x] Subtarea 1.3.1: Configurar TypeScript para scripts de contenido
+- [x] Subtarea 1.3.2: Implementar sistema básico de logging
+- [x] Subtarea 1.3.3: Crear estructura de clases para manejo de datos
+
+### Fase 2: Extracción de Datos de Propiedades
+**Estado: [x] Completado**
+
+#### Tarea 2.1: Parser de listados de propiedades
+**Estado: [x] Completado**
+- [x] Subtarea 2.1.1: Identificar selectores DOM para listados
+- [x] Subtarea 2.1.2: Extraer precio, ubicación y características básicas
+- [x] Subtarea 2.1.3: Manejar diferentes layouts de resultados
+
+#### Tarea 2.2: Generación de URLs cruzadas
+**Estado: [x] Completado**
+- [x] Subtarea 2.2.1: Convertir URL de venta a URL de alquiler equivalente
+- [x] Subtarea 2.2.2: Mantener filtros de búsqueda (superficie, habitaciones, etc.)
+- [x] Subtarea 2.2.3: Validar URLs generadas
+
+#### Tarea 2.3: Sistema de caché de datos
+**Estado: [ ] Pendiente**
+- [ ] Subtarea 2.3.1: Implementar almacenamiento local de datos extraídos
+- [ ] Subtarea 2.3.2: Sistema de expiración de caché
+- [ ] Subtarea 2.3.3: Optimización de consultas repetidas
+
+### Fase 3: Análisis de Rentabilidad
+**Estado: [x] Completado**
+
+#### Tarea 3.1: Obtención de datos de alquiler
+**Estado: [x] Completado**
+- [x] Subtarea 3.1.1: Realizar peticiones a URLs de alquiler equivalentes
+- [x] Subtarea 3.1.2: Extraer precios de alquiler de propiedades similares
+- [x] Subtarea 3.1.3: Manejar casos sin datos de alquiler disponibles
+
+#### Tarea 3.2: Cálculo de rentabilidad
+**Estado: [x] Completado**
+- [x] Subtarea 3.2.1: Implementar fórmulas de rentabilidad bruta
+- [x] Subtarea 3.2.2: Considerar gastos típicos (comunidad, IBI, seguro)
+- [x] Subtarea 3.2.3: Calcular rentabilidad neta aproximada
+
+#### Tarea 3.3: Clasificación de inversiones
+**Estado: [x] Completado**
+- [x] Subtarea 3.3.1: Definir rangos de rentabilidad (buena/regular/mala)
+- [x] Subtarea 3.3.2: Sistema de puntuación de inversiones
+- [x] Subtarea 3.3.3: Algoritmo de recomendación
+
+### Fase 4: Interfaz de Usuario
+**Estado: [x] Completado**
+
+#### Tarea 4.1: Indicadores visuales básicos
+**Estado: [x] Completado**
+- [x] Subtarea 4.1.1: Diseñar botones de rentabilidad (actualizado desde badges a botones)
+- [x] Subtarea 4.1.2: Implementar inyección de elementos en DOM
+- [x] Subtarea 4.1.3: Sistema de colores para diferentes niveles
+
+#### Tarea 4.2: Modal informativo
+**Estado: [x] Completado** (actualizado desde tooltips a modal)
+- [x] Subtarea 4.2.1: Mostrar detalles de cálculo en modal interactivo
+- [x] Subtarea 4.2.2: Incluir precio de alquiler estimado
+- [x] Subtarea 4.2.3: Mostrar rentabilidad porcentual y análisis completo
+- [x] Subtarea 4.2.4: Implementar modal responsivo con animaciones
+
+#### Tarea 4.3: Panel de configuración
+**Estado: [ ] Pendiente**
+- [ ] Subtarea 4.3.1: Permitir ajustar gastos estimados
+- [ ] Subtarea 4.3.2: Configurar umbrales de rentabilidad
+- [ ] Subtarea 4.3.3: Opciones de visualización
+
+### Fase 5: Optimización y Testing
+**Estado: [ ] Pendiente**
+
+#### Tarea 5.1: Optimización de rendimiento
+**Estado: [ ] Pendiente**
+- [ ] Subtarea 5.1.1: Minimizar consultas HTTP
+- [ ] Subtarea 5.1.2: Lazy loading de análisis
+- [ ] Subtarea 5.1.3: Optimizar manipulación del DOM
+
+#### Tarea 5.2: Manejo de errores
+**Estado: [ ] Pendiente**
+- [ ] Subtarea 5.2.1: Gestión de fallos en peticiones
+- [ ] Subtarea 5.2.2: Fallbacks para datos faltantes
+- [ ] Subtarea 5.2.3: Logging de errores para debug
+
+#### Tarea 5.3: Testing integral
+**Estado: [ ] Pendiente**
+- [ ] Subtarea 5.3.1: Pruebas en diferentes tipos de búsqueda
+- [ ] Subtarea 5.3.2: Validación de cálculos de rentabilidad
+- [ ] Subtarea 5.3.3: Testing de rendimiento en páginas con muchos resultados
+
+### Fase 6: Pulido y Documentación
+**Estado: [ ] Pendiente**
+
+#### Tarea 6.1: Mejoras de UX
+**Estado: [ ] Pendiente**
+- [ ] Subtarea 6.1.1: Animaciones suaves para indicadores
+- [ ] Subtarea 6.1.2: Estados de carga mientras analiza
+- [ ] Subtarea 6.1.3: Feedback visual de acciones del usuario
+
+#### Tarea 6.2: Internacionalización
+**Estado: [ ] Pendiente**
+- [ ] Subtarea 6.2.1: Extraer strings a archivos de idioma
+- [ ] Subtarea 6.2.2: Adaptar formatos de moneda
+- [ ] Subtarea 6.2.3: Soporte para múltiples locales
+
+#### Tarea 6.3: Documentación técnica
+**Estado: [ ] Pendiente**
+- [ ] Subtarea 6.3.1: Documentar API interna
+- [ ] Subtarea 6.3.2: Guía de configuración
+- [ ] Subtarea 6.3.3: Manual de usuario
+
+## Criterios de Éxito
+
+- [x] Activación automática en páginas de Idealista
+- [x] Detección correcta de búsquedas de compra vs alquiler
+- [x] Análisis de rentabilidad con precisión >80%
+- [x] Indicadores visuales claros y no intrusivos
+- [x] Tiempo de análisis <3 segundos por página
+- [x] Compatible con layouts responsivas de Idealista
+
+## Notas Técnicas
+
+### Arquitectura
+- Content Script principal para inyección en páginas
+- Background Script para gestión de peticiones
+- Storage API para caché de datos
+- Fetch API para obtención de datos cruzados
+
+### Consideraciones
+- Respetar rate limits de Idealista
+- Manejar cambios en estructura DOM del sitio
+- Mantener extensión ligera y eficiente
+- Privacidad: no almacenar datos personales
+
+---
+
+**Instrucciones de Uso del PRD:**
+- Marcar tareas como completadas cambiando `[ ]` por `[x]`
+- Actualizar estados de "Pendiente" a "En Progreso" o "Completado"
+- Mantener registro de decisiones técnicas importantes
+- Revisar y actualizar criterios de éxito según progreso

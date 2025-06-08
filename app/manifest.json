@@ -1,0 +1,40 @@
+{
+  "name": "Análisis de Inversión Inmobiliaria",
+  "short_name": "idealista-investment",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "description": "Analiza automáticamente la rentabilidad de propiedades inmobiliarias en Idealista.com",
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "minimum_chrome_version": "88.0",
+  "default_locale": "en",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.idealista.com/venta-viviendas/*",
+        "https://www.idealista.com/alquiler-viviendas/*"
+      ],
+      "css": [
+        "styles/content.css"
+      ],
+      "js": [
+        "scripts/content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.idealista.com/*"
+  ]
+}
