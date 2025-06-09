@@ -1,8 +1,8 @@
-import { RentalData, PropertyData } from '../interfaces';
-import { Logger } from '../../infrastructure/logger';
-import { IPropertyExtractor } from './property-extractor';
-import { ICacheService } from './cache-service';
-import { IErrorHandler, ErrorContext } from './error-handler';
+import type { Logger } from '../../infrastructure/logger';
+import { PropertyData, type RentalData } from '../interfaces';
+import type { ICacheService } from './cache-service';
+import type { ErrorContext, IErrorHandler } from './error-handler';
+import type { IPropertyExtractor } from './property-extractor';
 
 export interface IRentalDataAnalyzer {
   fetchRentalData(rentalUrl: string): Promise<RentalData | null>;
@@ -13,12 +13,12 @@ export class RentalDataAnalyzer implements IRentalDataAnalyzer {
     private logger: Logger,
     private propertyExtractor: IPropertyExtractor,
     private cacheService: ICacheService,
-    private errorHandler: IErrorHandler
+    private errorHandler: IErrorHandler,
   ) {}
 
   async fetchRentalData(rentalUrl: string): Promise<RentalData | null> {
     const cacheKey = this.createCacheKey(rentalUrl);
-    
+
     // Check cache first
     const cachedData = await this.cacheService.get(cacheKey);
     if (cachedData) {
@@ -31,19 +31,19 @@ export class RentalDataAnalyzer implements IRentalDataAnalyzer {
   private async fetchWithRetry(rentalUrl: string, cacheKey: string, attempt: number): Promise<RentalData | null> {
     const context: ErrorContext = {
       operation: 'fetchRentalData',
-      url: rentalUrl
+      url: rentalUrl,
     };
 
     try {
       this.logger.log(`Fetching rental data (attempt ${attempt}): ${rentalUrl}`);
-      
+
       const response = await fetch(rentalUrl, {
         method: 'GET',
         headers: {
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
           'Accept-Language': 'es-ES,es;q=0.5',
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
-        }
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+        },
       });
 
       if (!response.ok) {
@@ -52,24 +52,23 @@ export class RentalDataAnalyzer implements IRentalDataAnalyzer {
 
       const html = await response.text();
       const data = this.parseRentalDataFromHtml(html);
-      
+
       if (data) {
         await this.cacheService.set(cacheKey, data);
       }
-      
+
       return data;
-      
     } catch (error) {
       this.errorHandler.handleError(error as Error, context);
-      
+
       if (this.errorHandler.shouldRetry(error as Error, attempt)) {
         const delay = this.errorHandler.getRetryDelay(attempt);
         this.logger.log(`Retrying in ${delay}ms (attempt ${attempt + 1})`);
-        
+
         await this.delay(delay);
         return this.fetchWithRetry(rentalUrl, cacheKey, attempt + 1);
       }
-      
+
       return null;
     }
   }
@@ -85,24 +84,24 @@ export class RentalDataAnalyzer implements IRentalDataAnalyzer {
   }
 
   private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   private parseRentalDataFromHtml(html: string): RentalData | null {
     try {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
-      
+
       const properties = this.propertyExtractor.extractPropertiesFromDocument(doc);
-      
+
       if (properties.length === 0) {
         this.logger.log('No rental properties found in response');
         return null;
       }
 
       const prices = properties
-        .map(p => p.price)
-        .filter(price => price > 0)
+        .map((p) => p.price)
+        .filter((price) => price > 0)
         .sort((a, b) => a - b);
 
       if (prices.length === 0) {
@@ -121,9 +120,8 @@ export class RentalDataAnalyzer implements IRentalDataAnalyzer {
         minPrice,
         maxPrice,
         sampleSize: prices.length,
-        properties
+        properties,
       };
-
     } catch (error) {
       this.logger.error('Error parsing rental data from HTML', error);
       return null;

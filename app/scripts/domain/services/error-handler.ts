@@ -1,4 +1,4 @@
-import { Logger } from '../../infrastructure/logger';
+import type { Logger } from '../../infrastructure/logger';
 
 export interface ErrorContext {
   operation: string;
@@ -29,19 +29,19 @@ export class RobustErrorHandler implements IErrorHandler {
       error: error.message,
       stack: error.stack,
       context,
-      errorCount: currentCount + 1
+      errorCount: currentCount + 1,
     });
 
     // Log specific error patterns for debugging
     if (error.message.includes('fetch')) {
       this.logger.error('Network error detected', {
         url: context.url,
-        propertyId: context.propertyId
+        propertyId: context.propertyId,
       });
     } else if (error.message.includes('parse') || error.message.includes('DOM')) {
       this.logger.error('Parsing error detected', {
         operation: context.operation,
-        additionalData: context.additionalData
+        additionalData: context.additionalData,
       });
     }
   }
@@ -52,17 +52,17 @@ export class RobustErrorHandler implements IErrorHandler {
     }
 
     // Retry on network errors
-    if (error.message.includes('fetch') || 
-        error.message.includes('network') || 
-        error.message.includes('timeout')) {
+    if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('timeout')) {
       return true;
     }
 
     // Retry on temporary server errors (5xx)
-    if (error.message.includes('500') || 
-        error.message.includes('502') || 
-        error.message.includes('503') || 
-        error.message.includes('504')) {
+    if (
+      error.message.includes('500') ||
+      error.message.includes('502') ||
+      error.message.includes('503') ||
+      error.message.includes('504')
+    ) {
       return true;
     }
 

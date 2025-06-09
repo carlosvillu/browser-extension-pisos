@@ -1,5 +1,5 @@
-import { Logger } from '../../infrastructure/logger';
-import { RentalData } from '../interfaces';
+import type { Logger } from '../../infrastructure/logger';
+import type { RentalData } from '../interfaces';
 
 export interface ICacheService {
   get(key: string): Promise<RentalData | null>;
@@ -25,7 +25,7 @@ export class RentalDataCacheService implements ICacheService {
       const cacheKey = this.CACHE_PREFIX + key;
       const result = await chrome.storage.session.get(cacheKey);
       const entry: CacheEntry | undefined = result[cacheKey];
-      
+
       if (!entry) {
         return null;
       }
@@ -50,9 +50,9 @@ export class RentalDataCacheService implements ICacheService {
       const entry: CacheEntry = {
         data,
         timestamp: Date.now(),
-        ttl
+        ttl,
       };
-      
+
       await chrome.storage.session.set({ [cacheKey]: entry });
       this.logger.log(`Cached data for key: ${key} (TTL: ${ttl}ms)`);
     } catch (error) {
@@ -63,12 +63,12 @@ export class RentalDataCacheService implements ICacheService {
   async clear(): Promise<void> {
     try {
       const allData = await chrome.storage.session.get(null);
-      const cacheKeys = Object.keys(allData).filter(key => key.startsWith(this.CACHE_PREFIX));
-      
+      const cacheKeys = Object.keys(allData).filter((key) => key.startsWith(this.CACHE_PREFIX));
+
       if (cacheKeys.length > 0) {
         await chrome.storage.session.remove(cacheKeys);
       }
-      
+
       this.logger.log('Cache cleared');
     } catch (error) {
       this.logger.error('Error clearing cache:', error);
@@ -80,7 +80,7 @@ export class RentalDataCacheService implements ICacheService {
       const allData = await chrome.storage.session.get(null);
       const now = Date.now();
       const expiredKeys: string[] = [];
-      
+
       for (const [key, value] of Object.entries(allData)) {
         if (key.startsWith(this.CACHE_PREFIX)) {
           const entry = value as CacheEntry;
@@ -89,7 +89,7 @@ export class RentalDataCacheService implements ICacheService {
           }
         }
       }
-      
+
       if (expiredKeys.length > 0) {
         await chrome.storage.session.remove(expiredKeys);
         this.logger.log(`Cleaned up ${expiredKeys.length} expired cache entries`);

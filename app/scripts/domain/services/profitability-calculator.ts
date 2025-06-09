@@ -1,6 +1,6 @@
-import { PropertyData, RentalData, ProfitabilityAnalysis } from '../interfaces';
-import { Logger } from '../../infrastructure/logger';
-import { ConfigService, UserConfig } from './config-service';
+import type { Logger } from '../../infrastructure/logger';
+import type { ProfitabilityAnalysis, PropertyData, RentalData } from '../interfaces';
+import { ConfigService, type UserConfig } from './config-service';
 
 export interface IProfitabilityCalculator {
   calculateProfitability(property: PropertyData, rentalData: RentalData): Promise<ProfitabilityAnalysis>;
@@ -22,7 +22,7 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
     propertyTaxRate: 0.007,
     communityFeesWithGarage: 80,
     communityFeesWithoutGarage: 40,
-    vacancyMaintenanceRate: 0.05
+    vacancyMaintenanceRate: 0.05,
   };
 
   private configService: ConfigService;
@@ -30,7 +30,7 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
 
   constructor(
     private logger: Logger,
-    private config: ExpenseCalculationConfig = {} as ExpenseCalculationConfig
+    private config: ExpenseCalculationConfig = {} as ExpenseCalculationConfig,
   ) {
     this.config = { ...this.DEFAULT_CONFIG, ...config };
     this.configService = new ConfigService();
@@ -42,7 +42,7 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
     }
 
     const activeConfig = this.userConfig.expenseConfig;
-    
+
     const monthlyRent = rentalData.averagePrice;
     const annualRent = monthlyRent * 12;
     const purchasePrice = property.price;
@@ -57,7 +57,9 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
 
     const { recommendation, riskLevel } = this.evaluateInvestment(grossYield, netYield, rentalData.sampleSize);
 
-    this.logger.log(`Profitability calculation for ${property.id}: Gross ${grossYield.toFixed(2)}%, Net ${netYield.toFixed(2)}%`);
+    this.logger.log(
+      `Profitability calculation for ${property.id}: Gross ${grossYield.toFixed(2)}%, Net ${netYield.toFixed(2)}%`,
+    );
 
     return {
       propertyId: property.id,
@@ -67,7 +69,7 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
       netYield: Math.round(netYield * 100) / 100,
       monthlyExpenses,
       recommendation,
-      riskLevel
+      riskLevel,
     };
   }
 
@@ -86,7 +88,11 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
     return Math.round(expenses);
   }
 
-  private evaluateInvestment(grossYield: number, netYield: number, sampleSize: number): {
+  private evaluateInvestment(
+    grossYield: number,
+    netYield: number,
+    sampleSize: number,
+  ): {
     recommendation: 'excellent' | 'good' | 'fair' | 'poor';
     riskLevel: 'low' | 'medium' | 'high';
   } {
@@ -96,7 +102,7 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
     const thresholds = this.userConfig?.profitabilityThresholds || {
       excellent: 6,
       good: 4,
-      fair: 2
+      fair: 2,
     };
 
     if (netYield >= thresholds.excellent) {

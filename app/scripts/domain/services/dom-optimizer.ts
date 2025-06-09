@@ -1,4 +1,4 @@
-import { Logger } from '../../infrastructure/logger';
+import type { Logger } from '../../infrastructure/logger';
 
 export interface IDOMOptimizer {
   batchDOMUpdates(updates: (() => void)[]): void;
@@ -17,7 +17,7 @@ export class DOMOptimizer implements IDOMOptimizer {
     requestAnimationFrame(() => {
       // Read phase - measure all elements first
       const measurements: any[] = [];
-      
+
       updates.forEach((update, index) => {
         try {
           // If the update function has a read phase, execute it first
@@ -51,18 +51,17 @@ export class DOMOptimizer implements IDOMOptimizer {
 
   scheduleUpdate(callback: () => void): void {
     this.updateQueue.push(callback);
-    
+
     if (!this.isScheduled) {
       this.isScheduled = true;
-      
+
       requestAnimationFrame(() => {
         const updates = [...this.updateQueue];
         this.updateQueue.length = 0;
         this.isScheduled = false;
-        
+
         this.batchDOMUpdates(updates);
       });
     }
   }
 }
-

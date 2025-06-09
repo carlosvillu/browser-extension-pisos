@@ -1,6 +1,222 @@
 {
+  "appName": {
+    "message": "부동산 투자 분석",
+    "description": "Extension name"
+  },
   "appDescription": {
-    "message": "A basic browser extension skeleton",
-    "description": "The description of the extension"
+    "message": "Idealista.com에서 부동산 투자 수익성을 자동으로 분석합니다",
+    "description": "Extension description"
+  },
+  "popupTitle": {
+    "message": "설정 - 투자 분석",
+    "description": "Configuration page title"
+  },
+  "configurationTitle": {
+    "message": "분석 설정",
+    "description": "Main configuration title"
+  },
+  "estimatedExpensesTitle": {
+    "message": "예상 비용",
+    "description": "Expenses section title"
+  },
+  "propertyManagementLabel": {
+    "message": "부동산 관리 (€)",
+    "description": "Property management label"
+  },
+  "monthlyFixedCost": {
+    "message": "월 고정 비용",
+    "description": "Monthly costs help text"
+  },
+  "insuranceLabel": {
+    "message": "보험 (€)",
+    "description": "Insurance label"
+  },
+  "ibiLabel": {
+    "message": "재산세 (€)",
+    "description": "Property tax label"
+  },
+  "vacancyLabel": {
+    "message": "공실 (%)",
+    "description": "Vacancy label"
+  },
+  "rentalPercentage": {
+    "message": "임대 수입의 %",
+    "description": "Rental percentage help text"
+  },
+  "repairsLabel": {
+    "message": "수리 및 비상 비용 (%)",
+    "description": "Repairs label"
+  },
+  "repairsHelp": {
+    "message": "난방, 고장, 개선 등을 위한 임대료의 %",
+    "description": "Repairs help text"
+  },
+  "communityLabel": {
+    "message": "관리비 (€)",
+    "description": "Community fees label"
+  },
+  "communityHelp": {
+    "message": "월 관리비",
+    "description": "Community fees help text"
+  },
+  "mortgageConfigTitle": {
+    "message": "모기지 설정",
+    "description": "Mortgage section title"
+  },
+  "financingLabel": {
+    "message": "융자 (%)",
+    "description": "Financing label"
+  },
+  "priceFinnancedPercentage": {
+    "message": "융자 가격의 %",
+    "description": "Financing help text"
+  },
+  "interestLabel": {
+    "message": "이자율 (%)",
+    "description": "Interest label"
+  },
+  "annualTinHelp": {
+    "message": "연간 모기지 이자율",
+    "description": "Interest help text"
+  },
+  "managementFeesLabel": {
+    "message": "관리 수수료 (%)",
+    "description": "Management fees label"
+  },
+  "managementFeesHelp": {
+    "message": "구매 가격의 % (공증인, 등기, 평가 등)",
+    "description": "Management fees help text"
+  },
+  "profitabilityThresholdsTitle": {
+    "message": "수익성 기준",
+    "description": "Thresholds section title"
+  },
+  "excellentLabel": {
+    "message": "우수 (%)",
+    "description": "Excellent threshold label"
+  },
+  "goodLabel": {
+    "message": "양호 (%)",
+    "description": "Good threshold label"
+  },
+  "regularLabel": {
+    "message": "보통 (%)",
+    "description": "Regular threshold label"
+  },
+  "displayOptionsTitle": {
+    "message": "표시 옵션",
+    "description": "Display section title"
+  },
+  "showProfitabilityIndicators": {
+    "message": "수익성 지표 표시",
+    "description": "Show indicators label"
+  },
+  "allowDetailsModal": {
+    "message": "세부 정보 모달 허용",
+    "description": "Allow modal label"
+  },
+  "showLoadingStates": {
+    "message": "로딩 상태 표시",
+    "description": "Show loading states label"
+  },
+  "restoreButton": {
+    "message": "복원",
+    "description": "Restore button text"
+  },
+  "saveButton": {
+    "message": "저장",
+    "description": "Save button text"
+  },
+  "errorLoadingConfig": {
+    "message": "설정 로딩 오류",
+    "description": "Error loading config message"
+  },
+  "configSavedSuccessfully": {
+    "message": "설정이 성공적으로 저장되었습니다",
+    "description": "Success saving message"
+  },
+  "errorSavingConfig": {
+    "message": "설정 저장 오류",
+    "description": "Error saving config message"
+  },
+  "configRestoredSuccessfully": {
+    "message": "설정이 기본값으로 복원되었습니다",
+    "description": "Success restoring message"
+  },
+  "errorRestoringConfig": {
+    "message": "설정 복원 오류",
+    "description": "Error restoring config message"
+  },
+  "analyzing": {
+    "message": "분석 중...",
+    "description": "Analysis in progress text"
+  },
+  "noRentalData": {
+    "message": "임대 데이터 없음",
+    "description": "No rental data text"
+  },
+  "analysisError": {
+    "message": "분석 오류",
+    "description": "Analysis error text"
+  },
+  "netProfitability": {
+    "message": "순수익성:",
+    "description": "Net profitability label"
+  },
+  "excellentInvestment": {
+    "message": "우수한 투자",
+    "description": "Excellent investment recommendation"
+  },
+  "goodInvestment": {
+    "message": "양호한 투자",
+    "description": "Good investment recommendation"
+  },
+  "regularInvestment": {
+    "message": "보통 투자",
+    "description": "Regular investment recommendation"
+  },
+  "badInvestment": {
+    "message": "나쁜 투자",
+    "description": "Bad investment recommendation"
+  },
+  "unknownInvestment": {
+    "message": "알 수 없음",
+    "description": "Unknown recommendation"
+  },
+  "investmentAnalysisTitle": {
+    "message": "투자 분석",
+    "description": "Analysis modal title"
+  },
+  "roomsSuffix": {
+    "message": "개 방",
+    "description": "Rooms suffix"
+  },
+  "sizeSuffix": {
+    "message": "m²",
+    "description": "Square meters suffix"
+  },
+  "purchasePrice": {
+    "message": "구매 가격",
+    "description": "Purchase price label"
+  },
+  "monthlyRentalEstimate": {
+    "message": "월 임대료 추정",
+    "description": "Monthly rental label"
+  },
+  "monthlyExpensesEstimate": {
+    "message": "월 비용 추정",
+    "description": "Monthly expenses label"
+  },
+  "grossAnnualProfitability": {
+    "message": "연간 총수익성",
+    "description": "Gross profitability label"
+  },
+  "netAnnualProfitability": {
+    "message": "연간 순수익성",
+    "description": "Net profitability label"
+  },
+  "riskLevel": {
+    "message": "위험 수준: ",
+    "description": "Risk level label"
   }
 }

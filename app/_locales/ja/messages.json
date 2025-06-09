@@ -1,6 +1,222 @@
 {
+  "appName": {
+    "message": "不動産投資分析",
+    "description": "Extension name"
+  },
   "appDescription": {
-    "message": "A basic browser extension skeleton",
-    "description": "The description of the extension"
+    "message": "Idealista.comで不動産投資の収益性を自動分析します",
+    "description": "Extension description"
+  },
+  "popupTitle": {
+    "message": "設定 - 投資分析",
+    "description": "Configuration page title"
+  },
+  "configurationTitle": {
+    "message": "分析設定",
+    "description": "Main configuration title"
+  },
+  "estimatedExpensesTitle": {
+    "message": "推定費用",
+    "description": "Expenses section title"
+  },
+  "propertyManagementLabel": {
+    "message": "不動産管理 (€)",
+    "description": "Property management label"
+  },
+  "monthlyFixedCost": {
+    "message": "月額固定費",
+    "description": "Monthly costs help text"
+  },
+  "insuranceLabel": {
+    "message": "保険 (€)",
+    "description": "Insurance label"
+  },
+  "ibiLabel": {
+    "message": "固定資産税 (€)",
+    "description": "Property tax label"
+  },
+  "vacancyLabel": {
+    "message": "空室 (%)",
+    "description": "Vacancy label"
+  },
+  "rentalPercentage": {
+    "message": "賃貸収入の%",
+    "description": "Rental percentage help text"
+  },
+  "repairsLabel": {
+    "message": "修理・緊急費用 (%)",
+    "description": "Repairs label"
+  },
+  "repairsHelp": {
+    "message": "暖房、故障、改善等の賃料の%",
+    "description": "Repairs help text"
+  },
+  "communityLabel": {
+    "message": "管理費 (€)",
+    "description": "Community fees label"
+  },
+  "communityHelp": {
+    "message": "月額管理費",
+    "description": "Community fees help text"
+  },
+  "mortgageConfigTitle": {
+    "message": "ローン設定",
+    "description": "Mortgage section title"
+  },
+  "financingLabel": {
+    "message": "融資 (%)",
+    "description": "Financing label"
+  },
+  "priceFinnancedPercentage": {
+    "message": "融資価格の%",
+    "description": "Financing help text"
+  },
+  "interestLabel": {
+    "message": "金利 (%)",
+    "description": "Interest label"
+  },
+  "annualTinHelp": {
+    "message": "年間ローン金利",
+    "description": "Interest help text"
+  },
+  "managementFeesLabel": {
+    "message": "管理手数料 (%)",
+    "description": "Management fees label"
+  },
+  "managementFeesHelp": {
+    "message": "購入価格の% (公証人、登記、評価等)",
+    "description": "Management fees help text"
+  },
+  "profitabilityThresholdsTitle": {
+    "message": "収益性基準",
+    "description": "Thresholds section title"
+  },
+  "excellentLabel": {
+    "message": "優秀 (%)",
+    "description": "Excellent threshold label"
+  },
+  "goodLabel": {
+    "message": "良好 (%)",
+    "description": "Good threshold label"
+  },
+  "regularLabel": {
+    "message": "普通 (%)",
+    "description": "Regular threshold label"
+  },
+  "displayOptionsTitle": {
+    "message": "表示オプション",
+    "description": "Display section title"
+  },
+  "showProfitabilityIndicators": {
+    "message": "収益性指標を表示",
+    "description": "Show indicators label"
+  },
+  "allowDetailsModal": {
+    "message": "詳細モーダルを許可",
+    "description": "Allow modal label"
+  },
+  "showLoadingStates": {
+    "message": "ローディング状態を表示",
+    "description": "Show loading states label"
+  },
+  "restoreButton": {
+    "message": "復元",
+    "description": "Restore button text"
+  },
+  "saveButton": {
+    "message": "保存",
+    "description": "Save button text"
+  },
+  "errorLoadingConfig": {
+    "message": "設定の読み込みエラー",
+    "description": "Error loading config message"
+  },
+  "configSavedSuccessfully": {
+    "message": "設定が正常に保存されました",
+    "description": "Success saving message"
+  },
+  "errorSavingConfig": {
+    "message": "設定の保存エラー",
+    "description": "Error saving config message"
+  },
+  "configRestoredSuccessfully": {
+    "message": "設定がデフォルト値に復元されました",
+    "description": "Success restoring message"
+  },
+  "errorRestoringConfig": {
+    "message": "設定の復元エラー",
+    "description": "Error restoring config message"
+  },
+  "analyzing": {
+    "message": "分析中...",
+    "description": "Analysis in progress text"
+  },
+  "noRentalData": {
+    "message": "賃貸データなし",
+    "description": "No rental data text"
+  },
+  "analysisError": {
+    "message": "分析エラー",
+    "description": "Analysis error text"
+  },
+  "netProfitability": {
+    "message": "純収益性:",
+    "description": "Net profitability label"
+  },
+  "excellentInvestment": {
+    "message": "優秀な投資",
+    "description": "Excellent investment recommendation"
+  },
+  "goodInvestment": {
+    "message": "良好な投資",
+    "description": "Good investment recommendation"
+  },
+  "regularInvestment": {
+    "message": "普通の投資",
+    "description": "Regular investment recommendation"
+  },
+  "badInvestment": {
+    "message": "悪い投資",
+    "description": "Bad investment recommendation"
+  },
+  "unknownInvestment": {
+    "message": "不明",
+    "description": "Unknown recommendation"
+  },
+  "investmentAnalysisTitle": {
+    "message": "投資分析",
+    "description": "Analysis modal title"
+  },
+  "roomsSuffix": {
+    "message": "部屋",
+    "description": "Rooms suffix"
+  },
+  "sizeSuffix": {
+    "message": "m²",
+    "description": "Square meters suffix"
+  },
+  "purchasePrice": {
+    "message": "購入価格",
+    "description": "Purchase price label"
+  },
+  "monthlyRentalEstimate": {
+    "message": "月額賃料見積",
+    "description": "Monthly rental label"
+  },
+  "monthlyExpensesEstimate": {
+    "message": "月額費用見積",
+    "description": "Monthly expenses label"
+  },
+  "grossAnnualProfitability": {
+    "message": "年間総収益性",
+    "description": "Gross profitability label"
+  },
+  "netAnnualProfitability": {
+    "message": "年間純収益性",
+    "description": "Net profitability label"
+  },
+  "riskLevel": {
+    "message": "リスクレベル: ",
+    "description": "Risk level label"
   }
 }

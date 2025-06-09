@@ -1,6 +1,222 @@
 {
+  "appName": {
+    "message": "Análise de Investimento Imobiliário",
+    "description": "Extension name"
+  },
   "appDescription": {
-    "message": "A basic browser extension skeleton",
-    "description": "The description of the extension"
+    "message": "Analisa automaticamente a rentabilidade de investimentos imobiliários no Idealista.com",
+    "description": "Extension description"
+  },
+  "popupTitle": {
+    "message": "Configuração - Análise de Investimento",
+    "description": "Configuration page title"
+  },
+  "configurationTitle": {
+    "message": "Configuração de Análise",
+    "description": "Main configuration title"
+  },
+  "estimatedExpensesTitle": {
+    "message": "Gastos Estimados",
+    "description": "Expenses section title"
+  },
+  "propertyManagementLabel": {
+    "message": "Administração predial (€)",
+    "description": "Property management label"
+  },
+  "monthlyFixedCost": {
+    "message": "Custo fixo mensal",
+    "description": "Monthly costs help text"
+  },
+  "insuranceLabel": {
+    "message": "Seguro (€)",
+    "description": "Insurance label"
+  },
+  "ibiLabel": {
+    "message": "IPTU (€)",
+    "description": "Property tax label"
+  },
+  "vacancyLabel": {
+    "message": "Vacância (%)",
+    "description": "Vacancy label"
+  },
+  "rentalPercentage": {
+    "message": "% da receita de aluguel",
+    "description": "Rental percentage help text"
+  },
+  "repairsLabel": {
+    "message": "Reparos e contingências (%)",
+    "description": "Repairs label"
+  },
+  "repairsHelp": {
+    "message": "% do aluguel para aquecimento, avarias, melhorias, etc.",
+    "description": "Repairs help text"
+  },
+  "communityLabel": {
+    "message": "Condomínio (€)",
+    "description": "Community fees label"
+  },
+  "communityHelp": {
+    "message": "Despesas mensais de condomínio",
+    "description": "Community fees help text"
+  },
+  "mortgageConfigTitle": {
+    "message": "Configuração de Financiamento",
+    "description": "Mortgage section title"
+  },
+  "financingLabel": {
+    "message": "Financiamento (%)",
+    "description": "Financing label"
+  },
+  "priceFinnancedPercentage": {
+    "message": "% do preço financiado",
+    "description": "Financing help text"
+  },
+  "interestLabel": {
+    "message": "Juros (%)",
+    "description": "Interest label"
+  },
+  "annualTinHelp": {
+    "message": "Taxa de juros anual do financiamento",
+    "description": "Interest help text"
+  },
+  "managementFeesLabel": {
+    "message": "Taxas de administração (%)",
+    "description": "Management fees label"
+  },
+  "managementFeesHelp": {
+    "message": "% do preço de compra (cartório, registro, avaliação, etc.)",
+    "description": "Management fees help text"
+  },
+  "profitabilityThresholdsTitle": {
+    "message": "Limites de Rentabilidade",
+    "description": "Thresholds section title"
+  },
+  "excellentLabel": {
+    "message": "Excelente (%)",
+    "description": "Excellent threshold label"
+  },
+  "goodLabel": {
+    "message": "Boa (%)",
+    "description": "Good threshold label"
+  },
+  "regularLabel": {
+    "message": "Regular (%)",
+    "description": "Regular threshold label"
+  },
+  "displayOptionsTitle": {
+    "message": "Opções de Exibição",
+    "description": "Display section title"
+  },
+  "showProfitabilityIndicators": {
+    "message": "Mostrar indicadores de rentabilidade",
+    "description": "Show indicators label"
+  },
+  "allowDetailsModal": {
+    "message": "Permitir modal de detalhes",
+    "description": "Allow modal label"
+  },
+  "showLoadingStates": {
+    "message": "Mostrar estados de carregamento",
+    "description": "Show loading states label"
+  },
+  "restoreButton": {
+    "message": "Restaurar",
+    "description": "Restore button text"
+  },
+  "saveButton": {
+    "message": "Salvar",
+    "description": "Save button text"
+  },
+  "errorLoadingConfig": {
+    "message": "Erro ao carregar configuração",
+    "description": "Error loading config message"
+  },
+  "configSavedSuccessfully": {
+    "message": "Configuração salva com sucesso",
+    "description": "Success saving message"
+  },
+  "errorSavingConfig": {
+    "message": "Erro ao salvar configuração",
+    "description": "Error saving config message"
+  },
+  "configRestoredSuccessfully": {
+    "message": "Configuração restaurada para valores padrão",
+    "description": "Success restoring message"
+  },
+  "errorRestoringConfig": {
+    "message": "Erro ao restaurar configuração",
+    "description": "Error restoring config message"
+  },
+  "analyzing": {
+    "message": "Analisando...",
+    "description": "Analysis in progress text"
+  },
+  "noRentalData": {
+    "message": "Sem dados de aluguel",
+    "description": "No rental data text"
+  },
+  "analysisError": {
+    "message": "Erro na análise",
+    "description": "Analysis error text"
+  },
+  "netProfitability": {
+    "message": "Rentabilidade Líquida:",
+    "description": "Net profitability label"
+  },
+  "excellentInvestment": {
+    "message": "EXCELENTE INVESTIMENTO",
+    "description": "Excellent investment recommendation"
+  },
+  "goodInvestment": {
+    "message": "BOM INVESTIMENTO",
+    "description": "Good investment recommendation"
+  },
+  "regularInvestment": {
+    "message": "INVESTIMENTO REGULAR",
+    "description": "Regular investment recommendation"
+  },
+  "badInvestment": {
+    "message": "MAU INVESTIMENTO",
+    "description": "Bad investment recommendation"
+  },
+  "unknownInvestment": {
+    "message": "DESCONHECIDO",
+    "description": "Unknown recommendation"
+  },
+  "investmentAnalysisTitle": {
+    "message": "Análise de Investimento",
+    "description": "Analysis modal title"
+  },
+  "roomsSuffix": {
+    "message": " quartos",
+    "description": "Rooms suffix"
+  },
+  "sizeSuffix": {
+    "message": "m²",
+    "description": "Square meters suffix"
+  },
+  "purchasePrice": {
+    "message": "Preço de compra",
+    "description": "Purchase price label"
+  },
+  "monthlyRentalEstimate": {
+    "message": "Estimativa de aluguel mensal",
+    "description": "Monthly rental label"
+  },
+  "monthlyExpensesEstimate": {
+    "message": "Estimativa de gastos mensais",
+    "description": "Monthly expenses label"
+  },
+  "grossAnnualProfitability": {
+    "message": "Rentabilidade bruta anual",
+    "description": "Gross profitability label"
+  },
+  "netAnnualProfitability": {
+    "message": "Rentabilidade líquida anual",
+    "description": "Net profitability label"
+  },
+  "riskLevel": {
+    "message": "Nível de risco: ",
+    "description": "Risk level label"
   }
 }
