@@ -1,6 +1,234 @@
 {
+  "appName": {
+    "message": "Análisis de Inversión Inmobiliaria",
+    "description": "Nombre de la extensión"
+  },
   "appDescription": {
-    "message": "A basic browser extension skeleton",
-    "description": "The description of the extension"
+    "message": "Analiza automáticamente la rentabilidad de propiedades inmobiliarias en Idealista.com",
+    "description": "Descripción de la extensión"
+  },
+  "popupTitle": {
+    "message": "Configuración - Análisis de Inversión",
+    "description": "Título de la página de configuración"
+  },
+  "configurationTitle": {
+    "message": "Configuración de Análisis",
+    "description": "Título principal de configuración"
+  },
+  "estimatedExpensesTitle": {
+    "message": "Gastos Estimados",
+    "description": "Título de la sección de gastos"
+  },
+  "propertyManagementLabel": {
+    "message": "Gestión inmobiliaria (€)",
+    "description": "Etiqueta para gestión inmobiliaria"
+  },
+  "monthlyFixedCost": {
+    "message": "Coste mensual fijo",
+    "description": "Texto de ayuda para costes mensuales"
+  },
+  "insuranceLabel": {
+    "message": "Seguro (€)",
+    "description": "Etiqueta para seguro"
+  },
+  "ibiLabel": {
+    "message": "IBI (€)",
+    "description": "Etiqueta para IBI"
+  },
+  "vacancyLabel": {
+    "message": "Vacancia (%)",
+    "description": "Etiqueta para vacancia"
+  },
+  "rentalPercentage": {
+    "message": "% del alquiler",
+    "description": "Texto de ayuda para porcentaje del alquiler"
+  },
+  "repairsLabel": {
+    "message": "Reparaciones y contingencias (%)",
+    "description": "Etiqueta para reparaciones"
+  },
+  "repairsHelp": {
+    "message": "% del alquiler para calentadores, averías, mejoras, etc.",
+    "description": "Texto de ayuda para reparaciones"
+  },
+  "communityLabel": {
+    "message": "Comunidad (€)",
+    "description": "Etiqueta para gastos de comunidad"
+  },
+  "communityHelp": {
+    "message": "Gastos de comunidad mensual",
+    "description": "Texto de ayuda para comunidad"
+  },
+  "mortgageConfigTitle": {
+    "message": "Configuración de Hipoteca",
+    "description": "Título de la sección de hipoteca"
+  },
+  "financingLabel": {
+    "message": "Financiación (%)",
+    "description": "Etiqueta para financiación"
+  },
+  "priceFinnancedPercentage": {
+    "message": "% del precio financiado",
+    "description": "Texto de ayuda para financiación"
+  },
+  "interestLabel": {
+    "message": "Interés (%)",
+    "description": "Etiqueta para interés"
+  },
+  "annualTinHelp": {
+    "message": "TIN anual de la hipoteca",
+    "description": "Texto de ayuda para interés"
+  },
+  "managementFeesLabel": {
+    "message": "Gastos de gestión (%)",
+    "description": "Etiqueta para gastos de gestión"
+  },
+  "managementFeesHelp": {
+    "message": "% del precio de compra (notaría, registro, tasación, etc.)",
+    "description": "Texto de ayuda para gastos de gestión"
+  },
+  "profitabilityThresholdsTitle": {
+    "message": "Umbrales de Rentabilidad",
+    "description": "Título de la sección de umbrales"
+  },
+  "excellentLabel": {
+    "message": "Excelente (%)",
+    "description": "Etiqueta para umbral excelente"
+  },
+  "goodLabel": {
+    "message": "Buena (%)",
+    "description": "Etiqueta para umbral bueno"
+  },
+  "regularLabel": {
+    "message": "Regular (%)",
+    "description": "Etiqueta para umbral regular"
+  },
+  "displayOptionsTitle": {
+    "message": "Opciones de Visualización",
+    "description": "Título de la sección de visualización"
+  },
+  "showProfitabilityIndicators": {
+    "message": "Mostrar indicadores de rentabilidad",
+    "description": "Etiqueta para mostrar indicadores"
+  },
+  "allowDetailsModal": {
+    "message": "Permitir modal de detalles",
+    "description": "Etiqueta para permitir modal"
+  },
+  "showLoadingStates": {
+    "message": "Mostrar estados de carga",
+    "description": "Etiqueta para mostrar estados de carga"
+  },
+  "restoreButton": {
+    "message": "Restaurar",
+    "description": "Texto del botón restaurar"
+  },
+  "saveButton": {
+    "message": "Guardar",
+    "description": "Texto del botón guardar"
+  },
+  "errorLoadingConfig": {
+    "message": "Error al cargar la configuración",
+    "description": "Mensaje de error al cargar configuración"
+  },
+  "configSavedSuccessfully": {
+    "message": "Configuración guardada correctamente",
+    "description": "Mensaje de éxito al guardar"
+  },
+  "errorSavingConfig": {
+    "message": "Error al guardar la configuración",
+    "description": "Mensaje de error al guardar"
+  },
+  "configRestoredSuccessfully": {
+    "message": "Configuración restaurada a valores por defecto",
+    "description": "Mensaje de éxito al restaurar"
+  },
+  "errorRestoringConfig": {
+    "message": "Error al restaurar la configuración",
+    "description": "Mensaje de error al restaurar"
+  },
+  "analyzing": {
+    "message": "Analizando...",
+    "description": "Texto de análisis en progreso"
+  },
+  "noRentalData": {
+    "message": "Sin datos de alquiler",
+    "description": "Texto cuando no hay datos de alquiler"
+  },
+  "analysisError": {
+    "message": "Error en análisis",
+    "description": "Texto de error en análisis"
+  },
+  "netProfitability": {
+    "message": "Rentabilidad Neta:",
+    "description": "Etiqueta de rentabilidad neta"
+  },
+  "excellentInvestment": {
+    "message": "EXCELENTE INVERSIÓN",
+    "description": "Recomendación de excelente inversión"
+  },
+  "goodInvestment": {
+    "message": "BUENA INVERSIÓN",
+    "description": "Recomendación de buena inversión"
+  },
+  "regularInvestment": {
+    "message": "INVERSIÓN REGULAR",
+    "description": "Recomendación de inversión regular"
+  },
+  "badInvestment": {
+    "message": "MALA INVERSIÓN",
+    "description": "Recomendación de mala inversión"
+  },
+  "unknownInvestment": {
+    "message": "DESCONOCIDO",
+    "description": "Recomendación desconocida"
+  },
+  "investmentAnalysisTitle": {
+    "message": "Análisis de Inversión",
+    "description": "Título del modal de análisis"
+  },
+  "roomsSuffix": {
+    "message": " hab.",
+    "description": "Sufijo para habitaciones"
+  },
+  "sizeSuffix": {
+    "message": "m²",
+    "description": "Sufijo para metros cuadrados"
+  },
+  "purchasePrice": {
+    "message": "Precio de compra",
+    "description": "Etiqueta precio de compra"
+  },
+  "monthlyRentalEstimate": {
+    "message": "Alquiler estimado mensual",
+    "description": "Etiqueta alquiler estimado"
+  },
+  "monthlyExpensesEstimate": {
+    "message": "Gastos mensuales estimados",
+    "description": "Etiqueta gastos mensuales"
+  },
+  "grossAnnualProfitability": {
+    "message": "Rentabilidad bruta anual",
+    "description": "Etiqueta rentabilidad bruta"
+  },
+  "netAnnualProfitability": {
+    "message": "Rentabilidad neta anual",
+    "description": "Etiqueta rentabilidad neta"
+  },
+  "riskLevel": {
+    "message": "Nivel de riesgo: ",
+    "description": "Etiqueta nivel de riesgo"
+  },
+  "languageSelector": {
+    "message": "Idioma",
+    "description": "Etiqueta del selector de idioma"
+  },
+  "languageSpanish": {
+    "message": "Español",
+    "description": "Opción de idioma español"
+  },
+  "languageEnglish": {
+    "message": "Inglés",
+    "description": "Opción de idioma inglés"
   }
 }

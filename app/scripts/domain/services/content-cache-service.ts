@@ -1,6 +1,6 @@
-import { Logger } from '../../infrastructure/logger';
-import { RentalData } from '../interfaces';
-import { ICacheService } from './cache-service';
+import type { Logger } from '../../infrastructure/logger';
+import type { RentalData } from '../interfaces';
+import type { ICacheService } from './cache-service';
 
 export class ContentCacheService implements ICacheService {
   constructor(private logger: Logger) {}
@@ -9,13 +9,13 @@ export class ContentCacheService implements ICacheService {
     try {
       const response = await chrome.runtime.sendMessage({
         type: 'CACHE_GET',
-        key
+        key,
       });
-      
+
       if (!response.success) {
         throw new Error(response.error);
       }
-      
+
       return response.data;
     } catch (error) {
       this.logger.error(`Error getting cache for key ${key}:`, error);
@@ -29,9 +29,9 @@ export class ContentCacheService implements ICacheService {
         type: 'CACHE_SET',
         key,
         data,
-        ttl
+        ttl,
       });
-      
+
       if (!response.success) {
         throw new Error(response.error);
       }
@@ -43,9 +43,9 @@ export class ContentCacheService implements ICacheService {
   async clear(): Promise<void> {
     try {
       const response = await chrome.runtime.sendMessage({
-        type: 'CACHE_CLEAR'
+        type: 'CACHE_CLEAR',
       });
-      
+
       if (!response.success) {
         throw new Error(response.error);
       }
@@ -57,9 +57,9 @@ export class ContentCacheService implements ICacheService {
   async cleanup(): Promise<void> {
     try {
       const response = await chrome.runtime.sendMessage({
-        type: 'CACHE_CLEANUP'
+        type: 'CACHE_CLEANUP',
       });
-      
+
       if (!response.success) {
         throw new Error(response.error);
       }

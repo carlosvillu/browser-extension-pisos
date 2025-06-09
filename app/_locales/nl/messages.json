@@ -1,6 +1,222 @@
 {
+  "appName": {
+    "message": "Vastgoed Investering Analyse",
+    "description": "Extension name"
+  },
   "appDescription": {
-    "message": "A basic browser extension skeleton",
-    "description": "The description of the extension"
+    "message": "Analyseert automatisch de rentabiliteit van vastgoedinvesteringen op Idealista.com",
+    "description": "Extension description"
+  },
+  "popupTitle": {
+    "message": "Configuratie - Investeringsanalyse",
+    "description": "Configuration page title"
+  },
+  "configurationTitle": {
+    "message": "Analyse Configuratie",
+    "description": "Main configuration title"
+  },
+  "estimatedExpensesTitle": {
+    "message": "Geschatte Uitgaven",
+    "description": "Expenses section title"
+  },
+  "propertyManagementLabel": {
+    "message": "Vastgoedbeheer (€)",
+    "description": "Property management label"
+  },
+  "monthlyFixedCost": {
+    "message": "Maandelijkse vaste kosten",
+    "description": "Monthly costs help text"
+  },
+  "insuranceLabel": {
+    "message": "Verzekering (€)",
+    "description": "Insurance label"
+  },
+  "ibiLabel": {
+    "message": "Onroerendgoedbelasting (€)",
+    "description": "Property tax label"
+  },
+  "vacancyLabel": {
+    "message": "Leegstand (%)",
+    "description": "Vacancy label"
+  },
+  "rentalPercentage": {
+    "message": "% van huurinkomsten",
+    "description": "Rental percentage help text"
+  },
+  "repairsLabel": {
+    "message": "Reparaties en noodgevallen (%)",
+    "description": "Repairs label"
+  },
+  "repairsHelp": {
+    "message": "% van huur voor verwarming, defecten, verbeteringen, enz.",
+    "description": "Repairs help text"
+  },
+  "communityLabel": {
+    "message": "VvE kosten (€)",
+    "description": "Community fees label"
+  },
+  "communityHelp": {
+    "message": "Maandelijkse VvE kosten",
+    "description": "Community fees help text"
+  },
+  "mortgageConfigTitle": {
+    "message": "Hypotheek Configuratie",
+    "description": "Mortgage section title"
+  },
+  "financingLabel": {
+    "message": "Financiering (%)",
+    "description": "Financing label"
+  },
+  "priceFinnancedPercentage": {
+    "message": "% van gefinancierde prijs",
+    "description": "Financing help text"
+  },
+  "interestLabel": {
+    "message": "Rente (%)",
+    "description": "Interest label"
+  },
+  "annualTinHelp": {
+    "message": "Jaarlijkse hypotheekrente",
+    "description": "Interest help text"
+  },
+  "managementFeesLabel": {
+    "message": "Beheerkosten (%)",
+    "description": "Management fees label"
+  },
+  "managementFeesHelp": {
+    "message": "% van aankoopprijs (notaris, kadaster, taxatie, enz.)",
+    "description": "Management fees help text"
+  },
+  "profitabilityThresholdsTitle": {
+    "message": "Rentabiliteitsdrempels",
+    "description": "Thresholds section title"
+  },
+  "excellentLabel": {
+    "message": "Uitstekend (%)",
+    "description": "Excellent threshold label"
+  },
+  "goodLabel": {
+    "message": "Goed (%)",
+    "description": "Good threshold label"
+  },
+  "regularLabel": {
+    "message": "Redelijk (%)",
+    "description": "Regular threshold label"
+  },
+  "displayOptionsTitle": {
+    "message": "Weergave Opties",
+    "description": "Display section title"
+  },
+  "showProfitabilityIndicators": {
+    "message": "Rentabiliteitsindicatoren tonen",
+    "description": "Show indicators label"
+  },
+  "allowDetailsModal": {
+    "message": "Details modal toestaan",
+    "description": "Allow modal label"
+  },
+  "showLoadingStates": {
+    "message": "Laadstatus tonen",
+    "description": "Show loading states label"
+  },
+  "restoreButton": {
+    "message": "Herstellen",
+    "description": "Restore button text"
+  },
+  "saveButton": {
+    "message": "Opslaan",
+    "description": "Save button text"
+  },
+  "errorLoadingConfig": {
+    "message": "Fout bij het laden van configuratie",
+    "description": "Error loading config message"
+  },
+  "configSavedSuccessfully": {
+    "message": "Configuratie succesvol opgeslagen",
+    "description": "Success saving message"
+  },
+  "errorSavingConfig": {
+    "message": "Fout bij het opslaan van configuratie",
+    "description": "Error saving config message"
+  },
+  "configRestoredSuccessfully": {
+    "message": "Configuratie hersteld naar standaardwaarden",
+    "description": "Success restoring message"
+  },
+  "errorRestoringConfig": {
+    "message": "Fout bij het herstellen van configuratie",
+    "description": "Error restoring config message"
+  },
+  "analyzing": {
+    "message": "Analyseren...",
+    "description": "Analysis in progress text"
+  },
+  "noRentalData": {
+    "message": "Geen huurgegevens",
+    "description": "No rental data text"
+  },
+  "analysisError": {
+    "message": "Analysefout",
+    "description": "Analysis error text"
+  },
+  "netProfitability": {
+    "message": "Netto Rentabiliteit:",
+    "description": "Net profitability label"
+  },
+  "excellentInvestment": {
+    "message": "UITSTEKENDE INVESTERING",
+    "description": "Excellent investment recommendation"
+  },
+  "goodInvestment": {
+    "message": "GOEDE INVESTERING",
+    "description": "Good investment recommendation"
+  },
+  "regularInvestment": {
+    "message": "REDELIJKE INVESTERING",
+    "description": "Regular investment recommendation"
+  },
+  "badInvestment": {
+    "message": "SLECHTE INVESTERING",
+    "description": "Bad investment recommendation"
+  },
+  "unknownInvestment": {
+    "message": "ONBEKEND",
+    "description": "Unknown recommendation"
+  },
+  "investmentAnalysisTitle": {
+    "message": "Investeringsanalyse",
+    "description": "Analysis modal title"
+  },
+  "roomsSuffix": {
+    "message": " kamers",
+    "description": "Rooms suffix"
+  },
+  "sizeSuffix": {
+    "message": "m²",
+    "description": "Square meters suffix"
+  },
+  "purchasePrice": {
+    "message": "Aankoopprijs",
+    "description": "Purchase price label"
+  },
+  "monthlyRentalEstimate": {
+    "message": "Maandelijkse huurschatting",
+    "description": "Monthly rental label"
+  },
+  "monthlyExpensesEstimate": {
+    "message": "Maandelijkse kostenschatting",
+    "description": "Monthly expenses label"
+  },
+  "grossAnnualProfitability": {
+    "message": "Jaarlijkse bruto rentabiliteit",
+    "description": "Gross profitability label"
+  },
+  "netAnnualProfitability": {
+    "message": "Jaarlijkse netto rentabiliteit",
+    "description": "Net profitability label"
+  },
+  "riskLevel": {
+    "message": "Risiconiveau: ",
+    "description": "Risk level label"
   }
 }

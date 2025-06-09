@@ -15,6 +15,7 @@ https://github.com/user-attachments/assets/587fabd5-8711-4fe7-9b61-16feb426ce65
 - 🔄 **Análisis Cruzado**: Compara automáticamente precios de venta vs alquiler en la misma zona
 - ⚙️ **Panel de Configuración**: Personaliza gastos, umbrales de rentabilidad y opciones de visualización
 - 🏦 **Cálculo con Hipoteca**: Incluye configuración de financiación e intereses
+- 🌍 **Soporte Multiidioma**: Interfaz en Español e Inglés con selector de idioma
 
 ## 🚀 Instalación
 
@@ -64,6 +65,7 @@ app/scripts/
 │       ├── lazy-loader.ts           # Carga perezosa con Intersection Observer
 │       ├── dom-optimizer.ts         # Optimización de manipulación DOM
 │       ├── performance-monitor.ts   # Monitoreo de rendimiento
+│       ├── language-service.ts      # Servicio de internacionalización
 │       └── testing-validator.ts     # Validación y testing automático
 ├── infrastructure/           # Servicios de infraestructura
 │   └── logger.ts            # Sistema de logging
@@ -209,6 +211,12 @@ La extensión incluye un popup de configuración accesible desde el icono de la 
 - **Permitir modal**: Activar/desactivar modal de detalles
 - **Estados de carga**: Mostrar/ocultar indicadores de carga
 
+#### **Configuración de Idioma**
+- **Selector de Idioma**: Cambio dinámico entre Español e Inglés
+- **Persistencia**: El idioma seleccionado se mantiene entre sesiones
+- **Detección Automática**: Idioma inicial basado en configuración del navegador
+- **Fallback Inteligente**: Inglés por defecto para idiomas no soportados
+
 ### Configuración Programática
 
 ```typescript
@@ -306,10 +314,11 @@ npm run test:coverage
 - [x] **Monitoreo de rendimiento en tiempo real**
 - [x] **Panel de configuración completo con popup**
 - [x] **Configuración de hipoteca y gastos personalizables**
+- [x] **Internacionalización completa con soporte para Español e Inglés**
 
 ### 🔄 En Progreso
 
-- [ ] Internacionalización
+- [ ] Mejoras de UX adicionales
 
 ### 📅 Futuro
 

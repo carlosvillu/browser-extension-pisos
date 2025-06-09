@@ -1,5 +1,5 @@
-import { PropertyData } from '../interfaces';
-import { Logger } from '../../infrastructure/logger';
+import type { Logger } from '../../infrastructure/logger';
+import type { PropertyData } from '../interfaces';
 
 export interface IUrlGenerator {
   generateRentalUrl(location: string | null, property: PropertyData): string;
@@ -26,13 +26,13 @@ export class CrossReferenceUrlGenerator implements IUrlGenerator {
     }
 
     let url = `${baseUrl}/${location}/`;
-    
+
     const params = new URLSearchParams();
-    
+
     if (property.rooms && property.rooms > 0) {
       params.append('habitaciones', property.rooms.toString());
     }
-    
+
     if (property.size && property.size > 0) {
       const minSize = Math.max(1, property.size - 20);
       const maxSize = property.size + 20;

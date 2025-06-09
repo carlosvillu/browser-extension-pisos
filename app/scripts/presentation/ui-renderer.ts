@@ -1,6 +1,7 @@
-import { PropertyData, ProfitabilityAnalysis } from '../domain/interfaces';
-import { Logger } from '../infrastructure/logger';
-import { ConfigService, UserConfig } from '../domain/services/config-service';
+import type { ProfitabilityAnalysis, PropertyData } from '../domain/interfaces';
+import { ConfigService, type UserConfig } from '../domain/services/config-service';
+import { LanguageService } from '../domain/services/language-service';
+import type { Logger } from '../infrastructure/logger';
 
 export interface IUIRenderer {
   renderBadge(property: PropertyData, analysis: ProfitabilityAnalysis): Promise<void>;
@@ -12,10 +13,12 @@ export interface IUIRenderer {
 
 export class InvestmentUIRenderer implements IUIRenderer {
   private configService: ConfigService;
+  private languageService: LanguageService;
   private userConfig?: UserConfig;
 
   constructor(private logger: Logger) {
     this.configService = new ConfigService();
+    this.languageService = new LanguageService();
   }
 
   async renderBadge(property: PropertyData, analysis: ProfitabilityAnalysis): Promise<void> {
@@ -35,7 +38,7 @@ export class InvestmentUIRenderer implements IUIRenderer {
     this.removeBadge(property);
 
     const analysisButton = this.createAnalysisButton(property, analysis);
-    
+
     const descriptionContainer = propertyElement.querySelector('.item-description');
     if (descriptionContainer) {
       descriptionContainer.parentNode?.insertBefore(analysisButton, descriptionContainer.nextSibling);
@@ -62,7 +65,7 @@ export class InvestmentUIRenderer implements IUIRenderer {
     const badge = document.createElement('div');
     badge.className = 'investment-badge investment-badge--loading';
     badge.setAttribute('data-property-id', property.id);
-    badge.textContent = 'Analyzing...';
+    badge.textContent = this.languageService.getMessage('analyzing');
 
     const multimediaContainer = propertyElement.querySelector('.item-multimedia');
     if (multimediaContainer) {
@@ -83,7 +86,7 @@ export class InvestmentUIRenderer implements IUIRenderer {
     badge.innerHTML = `
       <div class="investment-badge__content">
         <div class="investment-badge__icon">📊</div>
-        <div class="investment-badge__text">Sin datos de alquiler</div>
+        <div class="investment-badge__text">${this.languageService.getMessage('noRentalData')}</div>
       </div>
     `;
 
@@ -106,7 +109,7 @@ export class InvestmentUIRenderer implements IUIRenderer {
     badge.innerHTML = `
       <div class="investment-badge__content">
         <div class="investment-badge__icon">⚠️</div>
-        <div class="investment-badge__text">Error en análisis</div>
+        <div class="investment-badge__text">${this.languageService.getMessage('analysisError')}</div>
       </div>
     `;
 
@@ -119,7 +122,7 @@ export class InvestmentUIRenderer implements IUIRenderer {
 
   removeBadge(property: PropertyData): void {
     const existingElements = document.querySelectorAll(`[data-property-id="${property.id}"]`);
-    existingElements.forEach(element => element.remove());
+    existingElements.forEach((element) => element.remove());
   }
 
   private findPropertyElement(propertyId: string): HTMLElement | null {
@@ -130,13 +133,13 @@ export class InvestmentUIRenderer implements IUIRenderer {
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'investment-analysis-container';
     buttonContainer.setAttribute('data-property-id', analysis.propertyId);
-    
+
     const button = document.createElement('button');
     button.className = `investment-analysis-button investment-analysis-button--${analysis.recommendation}`;
     button.innerHTML = `
       <div class="investment-analysis-button__content">
         <div class="investment-analysis-button__yield">
-          <span class="investment-analysis-button__yield-label">Rentabilidad Neta:</span>
+          <span class="investment-analysis-button__yield-label">${this.languageService.getMessage('netProfitability')}</span>
           <span class="investment-analysis-button__yield-value">${analysis.netYield}%</span>
         </div>
         <div class="investment-analysis-button__recommendation">
@@ -145,23 +148,23 @@ export class InvestmentUIRenderer implements IUIRenderer {
         <div class="investment-analysis-button__icon">📊</div>
       </div>
     `;
-    
+
     button.addEventListener('click', async (e) => {
       e.preventDefault();
       e.stopPropagation();
-      
+
       if (!this.userConfig) {
         this.userConfig = await this.configService.getConfig();
       }
-      
+
       if (this.userConfig.displayOptions.showModal) {
         this.openAnalysisModal(property, analysis);
         this.logger.log(`Investment modal opened for property ${property.id}`);
       }
     });
-    
+
     buttonContainer.appendChild(button);
-    
+
     return buttonContainer;
   }
 
@@ -172,17 +175,26 @@ export class InvestmentUIRenderer implements IUIRenderer {
 
   private getRecommendationText(recommendation: string): string {
     switch (recommendation) {
-      case 'excellent': return 'EXCELENTE INVERSIÓN';
-      case 'good': return 'BUENA INVERSIÓN';
-      case 'fair': return 'INVERSIÓN REGULAR';
-      case 'poor': return 'MALA INVERSIÓN';
-      default: return 'DESCONOCIDO';
+      case 'excellent':
+        return this.languageService.getMessage('excellentInvestment');
+      case 'good':
+        return this.languageService.getMessage('goodInvestment');
+      case 'fair':
+        return this.languageService.getMessage('regularInvestment');
+      case 'poor':
+        return this.languageService.getMessage('badInvestment');
+      default:
+        return this.languageService.getMessage('unknownInvestment');
     }
   }
 }
 
 class ModalRenderer {
-  constructor(private logger: Logger) {}
+  private languageService: LanguageService;
+
+  constructor(private logger: Logger) {
+    this.languageService = new LanguageService();
+  }
 
   openModal(property: PropertyData, analysis: ProfitabilityAnalysis): void {
     const existingModal = document.querySelector('.investment-modal-overlay');
@@ -192,22 +204,22 @@ class ModalRenderer {
 
     const modalOverlay = document.createElement('div');
     modalOverlay.className = 'investment-modal-overlay';
-    
+
     const modal = document.createElement('div');
     modal.className = 'investment-modal';
-    
+
     modal.innerHTML = this.createModalContent(property, analysis);
-    
+
     modalOverlay.appendChild(modal);
     document.body.appendChild(modalOverlay);
-    
+
     this.addEventListeners(modal, modalOverlay);
   }
 
   private createModalContent(property: PropertyData, analysis: ProfitabilityAnalysis): string {
     return `
       <div class="investment-modal__header">
-        <h3 class="investment-modal__title">Análisis de Inversión</h3>
+        <h3 class="investment-modal__title">${this.languageService.getMessage('investmentAnalysisTitle')}</h3>
         <button class="investment-modal__close">×</button>
       </div>
       
@@ -215,8 +227,8 @@ class ModalRenderer {
         <div class="investment-modal__property-info">
           <h4>${property.title}</h4>
           <p class="investment-modal__property-details">
-            ${property.rooms ? property.rooms + ' hab.' : ''} 
-            ${property.size ? property.size + 'm²' : ''}
+            ${property.rooms ? property.rooms + this.languageService.getMessage('roomsSuffix') : ''} 
+            ${property.size ? property.size + this.languageService.getMessage('sizeSuffix') : ''}
             ${property.floor ? ' • ' + property.floor : ''}
           </p>
         </div>
@@ -227,41 +239,41 @@ class ModalRenderer {
               ${this.getRecommendationText(analysis.recommendation)}
             </div>
             <div class="investment-modal__recommendation-yield">
-              Rentabilidad Neta: ${analysis.netYield}%
+              ${this.languageService.getMessage('netProfitability')} ${analysis.netYield}%
             </div>
           </div>
 
           <div class="investment-modal__details-grid">
             <div class="investment-modal__detail-item">
-              <span class="investment-modal__label">Precio de compra</span>
-              <span class="investment-modal__value">${analysis.purchasePrice.toLocaleString()}€</span>
+              <span class="investment-modal__label">${this.languageService.getMessage('purchasePrice')}</span>
+              <span class="investment-modal__value">${this.languageService.formatCurrency(analysis.purchasePrice)}</span>
             </div>
             
             <div class="investment-modal__detail-item">
-              <span class="investment-modal__label">Alquiler estimado mensual</span>
-              <span class="investment-modal__value">${analysis.estimatedRent.toLocaleString()}€</span>
+              <span class="investment-modal__label">${this.languageService.getMessage('monthlyRentalEstimate')}</span>
+              <span class="investment-modal__value">${this.languageService.formatCurrency(analysis.estimatedRent)}</span>
             </div>
             
             <div class="investment-modal__detail-item">
-              <span class="investment-modal__label">Gastos mensuales estimados</span>
-              <span class="investment-modal__value">${analysis.monthlyExpenses.toLocaleString()}€</span>
+              <span class="investment-modal__label">${this.languageService.getMessage('monthlyExpensesEstimate')}</span>
+              <span class="investment-modal__value">${this.languageService.formatCurrency(analysis.monthlyExpenses)}</span>
             </div>
             
             <div class="investment-modal__divider"></div>
             
             <div class="investment-modal__detail-item">
-              <span class="investment-modal__label">Rentabilidad bruta anual</span>
+              <span class="investment-modal__label">${this.languageService.getMessage('grossAnnualProfitability')}</span>
               <span class="investment-modal__value">${analysis.grossYield}%</span>
             </div>
             
             <div class="investment-modal__detail-item investment-modal__detail-item--highlight">
-              <span class="investment-modal__label">Rentabilidad neta anual</span>
+              <span class="investment-modal__label">${this.languageService.getMessage('netAnnualProfitability')}</span>
               <span class="investment-modal__value">${analysis.netYield}%</span>
             </div>
             
             <div class="investment-modal__risk investment-modal__risk--${analysis.riskLevel}">
               <div class="investment-modal__risk-dot"></div>
-              <span>Nivel de riesgo: ${analysis.riskLevel.toUpperCase()}</span>
+              <span>${this.languageService.getMessage('riskLevel')}${analysis.riskLevel.toUpperCase()}</span>
             </div>
           </div>
         </div>
@@ -274,13 +286,13 @@ class ModalRenderer {
     closeButton?.addEventListener('click', () => {
       modalOverlay.remove();
     });
-    
+
     modalOverlay.addEventListener('click', (e) => {
       if (e.target === modalOverlay) {
         modalOverlay.remove();
       }
     });
-    
+
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         modalOverlay.remove();
@@ -292,11 +304,16 @@ class ModalRenderer {
 
   private getRecommendationText(recommendation: string): string {
     switch (recommendation) {
-      case 'excellent': return 'EXCELENTE INVERSIÓN';
-      case 'good': return 'BUENA INVERSIÓN';
-      case 'fair': return 'INVERSIÓN REGULAR';
-      case 'poor': return 'MALA INVERSIÓN';
-      default: return 'DESCONOCIDO';
+      case 'excellent':
+        return this.languageService.getMessage('excellentInvestment');
+      case 'good':
+        return this.languageService.getMessage('goodInvestment');
+      case 'fair':
+        return this.languageService.getMessage('regularInvestment');
+      case 'poor':
+        return this.languageService.getMessage('badInvestment');
+      default:
+        return this.languageService.getMessage('unknownInvestment');
     }
   }
 }

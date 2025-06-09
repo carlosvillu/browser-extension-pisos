@@ -1,4 +1,4 @@
-import { Logger } from '../../infrastructure/logger';
+import type { Logger } from '../../infrastructure/logger';
 
 export interface PerformanceMetric {
   name: string;
@@ -51,28 +51,32 @@ export class PerformanceMonitor implements IPerformanceMonitor {
       name: timerId.split('-')[0],
       duration,
       timestamp: Date.now(),
-      details
+      details,
     };
 
     this.metrics.push(metric);
     this.logger.log(`${metric.name} completed in ${duration.toFixed(2)}ms`, details);
-    
+
     return metric;
   }
 
-  async benchmark(operation: () => Promise<void>, operationName: string, samples: number): Promise<PerformanceBenchmark> {
+  async benchmark(
+    operation: () => Promise<void>,
+    operationName: string,
+    samples: number,
+  ): Promise<PerformanceBenchmark> {
     this.logger.log(`Starting benchmark for ${operationName} with ${samples} samples`);
-    
+
     const durations: number[] = [];
-    
+
     for (let i = 0; i < samples; i++) {
       const timerId = this.startTimer(`${operationName}-benchmark-${i}`);
-      
+
       try {
         await operation();
         const metric = this.endTimer(timerId);
         durations.push(metric.duration);
-        
+
         // Add small delay between samples
         await this.delay(100);
       } catch (error) {
@@ -88,7 +92,7 @@ export class PerformanceMonitor implements IPerformanceMonitor {
     const averageDuration = durations.reduce((sum, d) => sum + d, 0) / durations.length;
     const minDuration = Math.min(...durations);
     const maxDuration = Math.max(...durations);
-    
+
     const variance = durations.reduce((sum, d) => sum + Math.pow(d - averageDuration, 2), 0) / durations.length;
     const standardDeviation = Math.sqrt(variance);
 
@@ -98,7 +102,7 @@ export class PerformanceMonitor implements IPerformanceMonitor {
       averageDuration,
       minDuration,
       maxDuration,
-      standardDeviation
+      standardDeviation,
     };
 
     this.logger.log(`Benchmark results for ${operationName}:`, benchmark);
@@ -116,6 +120,6 @@ export class PerformanceMonitor implements IPerformanceMonitor {
   }
 
   private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

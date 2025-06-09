@@ -1,6 +1,222 @@
 {
+  "appName": {
+    "message": "Ανάλυση Επενδύσεων Ακινήτων",
+    "description": "Extension name"
+  },
   "appDescription": {
-    "message": "A basic browser extension skeleton",
-    "description": "The description of the extension"
+    "message": "Αναλύει αυτόματα την κερδοφορία επενδύσεων ακινήτων στο Idealista.com",
+    "description": "Extension description"
+  },
+  "popupTitle": {
+    "message": "Ρυθμίσεις - Ανάλυση Επενδύσεων",
+    "description": "Configuration page title"
+  },
+  "configurationTitle": {
+    "message": "Ρυθμίσεις Ανάλυσης",
+    "description": "Main configuration title"
+  },
+  "estimatedExpensesTitle": {
+    "message": "Εκτιμώμενα Έξοδα",
+    "description": "Expenses section title"
+  },
+  "propertyManagementLabel": {
+    "message": "Διαχείριση ακινήτων (€)",
+    "description": "Property management label"
+  },
+  "monthlyFixedCost": {
+    "message": "Μηνιαίο σταθερό κόστος",
+    "description": "Monthly costs help text"
+  },
+  "insuranceLabel": {
+    "message": "Ασφάλιση (€)",
+    "description": "Insurance label"
+  },
+  "ibiLabel": {
+    "message": "Φόρος ακινήτων (€)",
+    "description": "Property tax label"
+  },
+  "vacancyLabel": {
+    "message": "Κενά διαστήματα (%)",
+    "description": "Vacancy label"
+  },
+  "rentalPercentage": {
+    "message": "% των εσόδων ενοικίου",
+    "description": "Rental percentage help text"
+  },
+  "repairsLabel": {
+    "message": "Επισκευές και εκτάκτως (%)",
+    "description": "Repairs label"
+  },
+  "repairsHelp": {
+    "message": "% του ενοικίου για θέρμανση, βλάβες, βελτιώσεις, κλπ.",
+    "description": "Repairs help text"
+  },
+  "communityLabel": {
+    "message": "Κοινόχρηστα (€)",
+    "description": "Community fees label"
+  },
+  "communityHelp": {
+    "message": "Μηνιαία έξοδα κοινόχρηστων",
+    "description": "Community fees help text"
+  },
+  "mortgageConfigTitle": {
+    "message": "Ρυθμίσεις Στεγαστικού Δανείου",
+    "description": "Mortgage section title"
+  },
+  "financingLabel": {
+    "message": "Χρηματοδότηση (%)",
+    "description": "Financing label"
+  },
+  "priceFinnancedPercentage": {
+    "message": "% χρηματοδοτούμενης τιμής",
+    "description": "Financing help text"
+  },
+  "interestLabel": {
+    "message": "Επιτόκιο (%)",
+    "description": "Interest label"
+  },
+  "annualTinHelp": {
+    "message": "Ετήσιο επιτόκιο στεγαστικού δανείου",
+    "description": "Interest help text"
+  },
+  "managementFeesLabel": {
+    "message": "Έξοδα διαχείρισης (%)",
+    "description": "Management fees label"
+  },
+  "managementFeesHelp": {
+    "message": "% της τιμής αγοράς (συμβολαιογράφος, κτηματολόγιο, εκτίμηση, κλπ.)",
+    "description": "Management fees help text"
+  },
+  "profitabilityThresholdsTitle": {
+    "message": "Όρια Κερδοφορίας",
+    "description": "Thresholds section title"
+  },
+  "excellentLabel": {
+    "message": "Εξαιρετική (%)",
+    "description": "Excellent threshold label"
+  },
+  "goodLabel": {
+    "message": "Καλή (%)",
+    "description": "Good threshold label"
+  },
+  "regularLabel": {
+    "message": "Κανονική (%)",
+    "description": "Regular threshold label"
+  },
+  "displayOptionsTitle": {
+    "message": "Επιλογές Εμφάνισης",
+    "description": "Display section title"
+  },
+  "showProfitabilityIndicators": {
+    "message": "Εμφάνιση δεικτών κερδοφορίας",
+    "description": "Show indicators label"
+  },
+  "allowDetailsModal": {
+    "message": "Επιτρέψτε modal λεπτομερειών",
+    "description": "Allow modal label"
+  },
+  "showLoadingStates": {
+    "message": "Εμφάνιση καταστάσεων φόρτωσης",
+    "description": "Show loading states label"
+  },
+  "restoreButton": {
+    "message": "Επαναφορά",
+    "description": "Restore button text"
+  },
+  "saveButton": {
+    "message": "Αποθήκευση",
+    "description": "Save button text"
+  },
+  "errorLoadingConfig": {
+    "message": "Σφάλμα φόρτωσης ρυθμίσεων",
+    "description": "Error loading config message"
+  },
+  "configSavedSuccessfully": {
+    "message": "Οι ρυθμίσεις αποθηκεύτηκαν επιτυχώς",
+    "description": "Success saving message"
+  },
+  "errorSavingConfig": {
+    "message": "Σφάλμα αποθήκευσης ρυθμίσεων",
+    "description": "Error saving config message"
+  },
+  "configRestoredSuccessfully": {
+    "message": "Οι ρυθμίσεις επαναφέρθηκαν στις προεπιλεγμένες τιμές",
+    "description": "Success restoring message"
+  },
+  "errorRestoringConfig": {
+    "message": "Σφάλμα επαναφοράς ρυθμίσεων",
+    "description": "Error restoring config message"
+  },
+  "analyzing": {
+    "message": "Ανάλυση...",
+    "description": "Analysis in progress text"
+  },
+  "noRentalData": {
+    "message": "Δεν υπάρχουν δεδομένα ενοικίου",
+    "description": "No rental data text"
+  },
+  "analysisError": {
+    "message": "Σφάλμα ανάλυσης",
+    "description": "Analysis error text"
+  },
+  "netProfitability": {
+    "message": "Καθαρή Κερδοφορία:",
+    "description": "Net profitability label"
+  },
+  "excellentInvestment": {
+    "message": "ΕΞΑΙΡΕΤΙΚΗ ΕΠΕΝΔΥΣΗ",
+    "description": "Excellent investment recommendation"
+  },
+  "goodInvestment": {
+    "message": "ΚΑΛΗ ΕΠΕΝΔΥΣΗ",
+    "description": "Good investment recommendation"
+  },
+  "regularInvestment": {
+    "message": "ΚΑΝΟΝΙΚΗ ΕΠΕΝΔΥΣΗ",
+    "description": "Regular investment recommendation"
+  },
+  "badInvestment": {
+    "message": "ΚΑΚΗ ΕΠΕΝΔΥΣΗ",
+    "description": "Bad investment recommendation"
+  },
+  "unknownInvestment": {
+    "message": "ΑΓΝΩΣΤΟ",
+    "description": "Unknown recommendation"
+  },
+  "investmentAnalysisTitle": {
+    "message": "Ανάλυση Επένδυσης",
+    "description": "Analysis modal title"
+  },
+  "roomsSuffix": {
+    "message": " δωμάτια",
+    "description": "Rooms suffix"
+  },
+  "sizeSuffix": {
+    "message": "m²",
+    "description": "Square meters suffix"
+  },
+  "purchasePrice": {
+    "message": "Τιμή αγοράς",
+    "description": "Purchase price label"
+  },
+  "monthlyRentalEstimate": {
+    "message": "Μηνιαία εκτίμηση ενοικίου",
+    "description": "Monthly rental label"
+  },
+  "monthlyExpensesEstimate": {
+    "message": "Μηνιαία εκτίμηση εξόδων",
+    "description": "Monthly expenses label"
+  },
+  "grossAnnualProfitability": {
+    "message": "Ετήσια μικτή κερδοφορία",
+    "description": "Gross profitability label"
+  },
+  "netAnnualProfitability": {
+    "message": "Ετήσια καθαρή κερδοφορία",
+    "description": "Net profitability label"
+  },
+  "riskLevel": {
+    "message": "Επίπεδο κινδύνου: ",
+    "description": "Risk level label"
   }
 }

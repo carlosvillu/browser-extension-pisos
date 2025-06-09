@@ -1,5 +1,5 @@
-import { PropertyData } from '../interfaces';
-import { Logger } from '../../infrastructure/logger';
+import type { Logger } from '../../infrastructure/logger';
+import type { PropertyData } from '../interfaces';
 
 export interface IPropertyExtractor {
   extractPropertiesFromPage(): PropertyData[];
@@ -12,10 +12,10 @@ export class PropertyExtractor implements IPropertyExtractor {
   extractPropertiesFromPage(): PropertyData[] {
     const properties: PropertyData[] = [];
     const propertyElements = document.querySelectorAll('article.item[data-element-id]');
-    
+
     this.logger.log(`Found ${propertyElements.length} property elements on page`);
 
-    propertyElements.forEach(element => {
+    propertyElements.forEach((element) => {
       try {
         const property = this.extractPropertyData(element as HTMLElement);
         if (property) {
@@ -32,8 +32,8 @@ export class PropertyExtractor implements IPropertyExtractor {
   extractPropertiesFromDocument(doc: Document): PropertyData[] {
     const properties: PropertyData[] = [];
     const propertyElements = doc.querySelectorAll('article.item[data-element-id]');
-    
-    propertyElements.forEach(element => {
+
+    propertyElements.forEach((element) => {
       try {
         const property = this.extractPropertyDataFromElement(element as HTMLElement);
         if (property) {
@@ -57,7 +57,7 @@ export class PropertyExtractor implements IPropertyExtractor {
 
     const priceElement = element.querySelector('.item-price');
     const priceText = priceElement?.textContent?.replace(/[€\s]/g, '').replace('.', '') || '0';
-    const price = parseInt(priceText, 10) || 0;
+    const price = Number.parseInt(priceText, 10) || 0;
 
     const linkElement = element.querySelector('.item-link') as HTMLAnchorElement;
     const title = linkElement?.textContent?.trim() || '';
@@ -68,15 +68,15 @@ export class PropertyExtractor implements IPropertyExtractor {
     let size: number | null = null;
     let floor: string | null = null;
 
-    details.forEach(detail => {
+    details.forEach((detail) => {
       const text = detail.textContent?.trim() || '';
-      
+
       if (text.includes('hab.')) {
         const roomMatch = text.match(/(\d+)\s*hab\./);
-        rooms = roomMatch ? parseInt(roomMatch[1], 10) : null;
+        rooms = roomMatch ? Number.parseInt(roomMatch[1], 10) : null;
       } else if (text.includes('m²')) {
         const sizeMatch = text.match(/(\d+)\s*m²/);
-        size = sizeMatch ? parseInt(sizeMatch[1], 10) : null;
+        size = sizeMatch ? Number.parseInt(sizeMatch[1], 10) : null;
       } else if (text.includes('Planta') || text.includes('Bajo')) {
         floor = text;
       }
@@ -88,7 +88,7 @@ export class PropertyExtractor implements IPropertyExtractor {
     const description = descriptionElement?.textContent?.trim() || '';
 
     const tagElements = element.querySelectorAll('.listing-tags');
-    const tags: string[] = Array.from(tagElements).map(tag => tag.textContent?.trim() || '');
+    const tags: string[] = Array.from(tagElements).map((tag) => tag.textContent?.trim() || '');
 
     const location = this.extractLocationFromTitle(title);
 
@@ -103,7 +103,7 @@ export class PropertyExtractor implements IPropertyExtractor {
       description,
       url,
       tags,
-      location
+      location,
     };
   }
 

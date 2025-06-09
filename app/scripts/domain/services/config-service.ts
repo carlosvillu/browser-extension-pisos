@@ -34,7 +34,7 @@ export interface DisplayOptions {
 
 export class ConfigService {
   private static readonly STORAGE_KEY = 'investmentAnalysisConfig';
-  
+
   private static readonly DEFAULT_CONFIG: UserConfig = {
     expenseConfig: {
       propertyManagementMonthly: 150,
@@ -42,37 +42,37 @@ export class ConfigService {
       propertyTaxMonthly: 100,
       communityFees: 60,
       vacancyMaintenanceRate: 0.05,
-      maintenanceContingencyRate: 0.01
+      maintenanceContingencyRate: 0.01,
     },
     mortgageConfig: {
-      loanToValueRatio: 0.80,
-      managementFeesRate: 0.10,
-      interestRate: 2.45
+      loanToValueRatio: 0.8,
+      managementFeesRate: 0.1,
+      interestRate: 2.45,
     },
     profitabilityThresholds: {
       excellent: 6,
       good: 4,
-      fair: 2
+      fair: 2,
     },
     displayOptions: {
       showBadges: true,
       showModal: true,
-      showLoadingStates: true
-    }
+      showLoadingStates: true,
+    },
   };
 
   async getConfig(): Promise<UserConfig> {
     try {
       const result = await chrome.storage.sync.get(ConfigService.STORAGE_KEY);
       const storedConfig = result[ConfigService.STORAGE_KEY];
-      
+
       if (!storedConfig) {
         return ConfigService.DEFAULT_CONFIG;
       }
-      
+
       // Migrar configuraciones antiguas
       const migratedConfig = this.migrateOldConfig(storedConfig);
-      
+
       return { ...ConfigService.DEFAULT_CONFIG, ...migratedConfig };
     } catch (error) {
       console.error('Error loading config:', error);
@@ -85,19 +85,20 @@ export class ConfigService {
     if (config.expenseConfig) {
       if (config.expenseConfig.communityFeesWithGarage && !config.expenseConfig.communityFees) {
         // Usar el valor promedio de los dos campos antiguos
-        const avgCommunity = Math.round((
-          (config.expenseConfig.communityFeesWithGarage || 80) + 
-          (config.expenseConfig.communityFeesWithoutGarage || 40)
-        ) / 2);
-        
+        const avgCommunity = Math.round(
+          ((config.expenseConfig.communityFeesWithGarage || 80) +
+            (config.expenseConfig.communityFeesWithoutGarage || 40)) /
+            2,
+        );
+
         config.expenseConfig.communityFees = avgCommunity;
-        
+
         // Limpiar campos antiguos
         delete config.expenseConfig.communityFeesWithGarage;
         delete config.expenseConfig.communityFeesWithoutGarage;
       }
     }
-    
+
     return config;
   }
 
@@ -105,9 +106,9 @@ export class ConfigService {
     try {
       const currentConfig = await this.getConfig();
       const newConfig = { ...currentConfig, ...partialConfig };
-      
+
       await chrome.storage.sync.set({
-        [ConfigService.STORAGE_KEY]: newConfig
+        [ConfigService.STORAGE_KEY]: newConfig,
       });
     } catch (error) {
       console.error('Error saving config:', error);
@@ -118,7 +119,7 @@ export class ConfigService {
   async resetToDefaults(): Promise<void> {
     try {
       await chrome.storage.sync.set({
-        [ConfigService.STORAGE_KEY]: ConfigService.DEFAULT_CONFIG
+        [ConfigService.STORAGE_KEY]: ConfigService.DEFAULT_CONFIG,
       });
     } catch (error) {
       console.error('Error resetting config:', error);

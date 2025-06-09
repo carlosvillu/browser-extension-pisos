@@ -141,10 +141,10 @@ Desarrollo de una extensión de navegador que analiza automáticamente la rentab
 - [ ] Subtarea 6.1.3: Feedback visual de acciones del usuario
 
 #### Tarea 6.2: Internacionalización
-**Estado: [ ] Pendiente**
-- [ ] Subtarea 6.2.1: Extraer strings a archivos de idioma
-- [ ] Subtarea 6.2.2: Adaptar formatos de moneda
-- [ ] Subtarea 6.2.3: Soporte para múltiples locales
+**Estado: [x] Completado**
+- [x] Subtarea 6.2.1: Extraer strings a archivos de idioma (Español e Inglés)
+- [x] Subtarea 6.2.2: Adaptar formatos de moneda según idioma
+- [x] Subtarea 6.2.3: Soporte para múltiples locales con selector dinámico
 
 #### Tarea 6.3: Documentación técnica
 **Estado: [ ] Pendiente**

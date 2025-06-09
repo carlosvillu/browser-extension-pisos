@@ -1,5 +1,5 @@
-import { UrlAnalysisResult } from '../interfaces';
-import { Logger } from '../../infrastructure/logger';
+import type { Logger } from '../../infrastructure/logger';
+import type { UrlAnalysisResult } from '../interfaces';
 
 export interface IUrlAnalyzer {
   analyzeCurrentPage(): UrlAnalysisResult;
@@ -18,24 +18,25 @@ export class UrlAnalyzer implements IUrlAnalyzer {
   analyzeUrl(url: URL): UrlAnalysisResult {
     const pathname = url.pathname;
     const searchParams = url.searchParams;
-    
+
     let searchType: 'venta' | 'alquiler' | null = null;
     if (pathname.includes('/venta-viviendas/')) {
       searchType = 'venta';
     } else if (pathname.includes('/alquiler-viviendas/')) {
       searchType = 'alquiler';
     }
-    
+
     const location = this.extractLocationFromUrl(pathname);
     const hasFilters = searchParams.toString().length > 0;
-    const isIdealista = url.hostname === 'www.idealista.com' && 
-                       (pathname.includes('/venta-viviendas/') || pathname.includes('/alquiler-viviendas/'));
-    
+    const isIdealista =
+      url.hostname === 'www.idealista.com' &&
+      (pathname.includes('/venta-viviendas/') || pathname.includes('/alquiler-viviendas/'));
+
     const result = {
       isIdealista,
       searchType,
       location,
-      hasFilters
+      hasFilters,
     };
 
     this.logger.log('URL Analysis:', result);
@@ -45,9 +46,11 @@ export class UrlAnalyzer implements IUrlAnalyzer {
   isIdealistaPropertyPage(): boolean {
     const hostname = window.location.hostname;
     const pathname = window.location.pathname;
-    
-    return hostname === 'www.idealista.com' && 
-           (pathname.includes('/venta-viviendas/') || pathname.includes('/alquiler-viviendas/'));
+
+    return (
+      hostname === 'www.idealista.com' &&
+      (pathname.includes('/venta-viviendas/') || pathname.includes('/alquiler-viviendas/'))
+    );
   }
 
   private extractLocationFromUrl(pathname: string): string | null {
