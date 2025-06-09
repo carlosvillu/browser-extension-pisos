@@ -2,3 +2,4 @@
 - El código de la nueva fase tiene que ir en su propia rama con el nombre de la fase
 - Trabajamos una fase cada vez
 - Cuando te confirme que has acabado de una fase, haz el commit de todos y crea un PR de la Rama. Asegurate de agregar una descripción detallada de lo que has hecho en la fase
+- Trata siempre de seguir principios SOLID a la hora de desarrollar. Trata de conseguir que la estructura del código tenga sentido, y sea escalable.

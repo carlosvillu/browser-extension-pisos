@@ -90,6 +90,53 @@
   50% { opacity: 0.7; }
 }
 
+/* Badge Styles for different states */
+.investment-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  min-width: 80px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.investment-badge--loading {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+.investment-badge--no-data {
+  background: linear-gradient(135deg, #64748b, #475569);
+  color: white;
+}
+
+.investment-badge--error {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.investment-badge__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.investment-badge__icon {
+  font-size: 12px;
+}
+
+.investment-badge__text {
+  font-size: 10px;
+  line-height: 1.2;
+}
+
 /* Modal Styles */
 .investment-modal-overlay {
   position: fixed;
@@ -348,5 +395,17 @@
   
   .investment-modal__recommendation-yield {
     font-size: 20px;
+  }
+  
+  .investment-badge {
+    top: 4px;
+    right: 4px;
+    padding: 4px 6px;
+    font-size: 10px;
+    min-width: 60px;
+  }
+  
+  .investment-badge__text {
+    font-size: 9px;
   }
 }
