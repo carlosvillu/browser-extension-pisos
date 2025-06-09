@@ -115,54 +115,7 @@ export class PerformanceMonitor implements IPerformanceMonitor {
     this.logger.log('Performance metrics cleared');
   }
 
-  getMemoryUsage(): any {
-    if ('memory' in performance) {
-      return {
-        used: (performance as any).memory.usedJSHeapSize,
-        total: (performance as any).memory.totalJSHeapSize,
-        limit: (performance as any).memory.jsHeapSizeLimit
-      };
-    }
-    return null;
-  }
-
   private delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
-}
-
-export class PageLoadMonitor {
-  constructor(private logger: Logger) {}
-
-  measurePageLoadMetrics(): Record<string, number> {
-    const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-    
-    if (!navigation) {
-      this.logger.log('Navigation timing not available');
-      return {};
-    }
-
-    const metrics = {
-      domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
-      loadComplete: navigation.loadEventEnd - navigation.loadEventStart,
-      domInteractive: navigation.domInteractive - navigation.fetchStart,
-      firstPaint: this.getFirstPaint(),
-      firstContentfulPaint: this.getFirstContentfulPaint()
-    };
-
-    this.logger.log('Page load metrics:', metrics);
-    return metrics;
-  }
-
-  private getFirstPaint(): number {
-    const paintEntries = performance.getEntriesByType('paint');
-    const firstPaint = paintEntries.find(entry => entry.name === 'first-paint');
-    return firstPaint ? firstPaint.startTime : 0;
-  }
-
-  private getFirstContentfulPaint(): number {
-    const paintEntries = performance.getEntriesByType('paint');
-    const fcp = paintEntries.find(entry => entry.name === 'first-contentful-paint');
-    return fcp ? fcp.startTime : 0;
   }
 }

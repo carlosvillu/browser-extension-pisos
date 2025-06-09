@@ -66,31 +66,3 @@ export class DOMOptimizer implements IDOMOptimizer {
   }
 }
 
-export class DocumentFragmentOptimizer {
-  constructor(private logger: Logger) {}
-
-  createOptimizedElement(tagName: string, setup: (element: HTMLElement) => void): HTMLElement {
-    // Create element in a document fragment to avoid triggering reflows
-    const fragment = document.createDocumentFragment();
-    const element = document.createElement(tagName);
-    
-    fragment.appendChild(element);
-    
-    // Configure the element while it's detached from the DOM
-    setup(element);
-    
-    return element;
-  }
-
-  insertMultipleElements(container: Element, elements: HTMLElement[]): void {
-    // Use document fragment to insert multiple elements efficiently
-    const fragment = document.createDocumentFragment();
-    
-    elements.forEach(element => {
-      fragment.appendChild(element);
-    });
-    
-    container.appendChild(fragment);
-    this.logger.log(`Inserted ${elements.length} elements using document fragment`);
-  }
-}

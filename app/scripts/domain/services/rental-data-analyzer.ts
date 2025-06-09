@@ -20,7 +20,7 @@ export class RentalDataAnalyzer implements IRentalDataAnalyzer {
     const cacheKey = this.createCacheKey(rentalUrl);
     
     // Check cache first
-    const cachedData = this.cacheService.get(cacheKey);
+    const cachedData = await this.cacheService.get(cacheKey);
     if (cachedData) {
       return cachedData;
     }
@@ -54,7 +54,7 @@ export class RentalDataAnalyzer implements IRentalDataAnalyzer {
       const data = this.parseRentalDataFromHtml(html);
       
       if (data) {
-        this.cacheService.set(cacheKey, data);
+        await this.cacheService.set(cacheKey, data);
       }
       
       return data;
