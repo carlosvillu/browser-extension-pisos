@@ -54,7 +54,14 @@ app/scripts/
 │       ├── property-extractor.ts    # Extracción de datos de propiedades
 │       ├── rental-data-analyzer.ts  # Análisis de datos de alquiler
 │       ├── profitability-calculator.ts # Cálculos de rentabilidad
-│       └── url-generator.ts         # Generación de URLs cruzadas
+│       ├── url-generator.ts         # Generación de URLs cruzadas
+│       ├── cache-service.ts         # Sistema de caché con TTL
+│       ├── error-handler.ts         # Manejo robusto de errores
+│       ├── batch-processor.ts       # Procesamiento en lotes
+│       ├── lazy-loader.ts           # Carga perezosa con Intersection Observer
+│       ├── dom-optimizer.ts         # Optimización de manipulación DOM
+│       ├── performance-monitor.ts   # Monitoreo de rendimiento
+│       └── testing-validator.ts     # Validación y testing automático
 ├── infrastructure/           # Servicios de infraestructura
 │   └── logger.ts            # Sistema de logging
 ├── presentation/            # Capa de presentación
@@ -125,6 +132,25 @@ graph TD
 - Parsea propiedades del DOM de Idealista
 - Extrae precio, habitaciones, m², ubicación
 - Maneja diferentes layouts de resultados
+
+### Sistema de Caché Inteligente
+
+- **Caché con TTL**: Almacena datos de alquiler por 10 minutos
+- **Agrupación de consultas**: Minimiza peticiones HTTP mediante batching
+- **Limpieza automática**: Expira entradas obsoletas cada 5 minutos
+
+### Optimizaciones de Rendimiento
+
+- **Lazy Loading**: Análisis solo cuando las propiedades son visibles (Intersection Observer)
+- **Batch Processing**: Agrupa propiedades similares para reducir peticiones
+- **DOM Optimization**: Batching de operaciones DOM para minimizar reflows
+- **Performance Monitoring**: Métricas de rendimiento en tiempo real
+
+### Manejo Robusto de Errores
+
+- **Retry con Exponential Backoff**: Reintenta automáticamente en fallos de red
+- **Fallbacks Inteligentes**: Muestra información parcial cuando los datos no están disponibles
+- **Logging Estructurado**: Sistema completo de logging para debugging
 
 ### Cálculo de Rentabilidad
 
@@ -226,20 +252,23 @@ npm run test:coverage
 - [x] Análisis cruzado de rentabilidad
 - [x] Interfaz de usuario con modales
 - [x] Refactorización con arquitectura SOLID
+- [x] **Sistema de caché inteligente con TTL**
+- [x] **Optimizaciones de rendimiento (Lazy Loading, Batch Processing)**
+- [x] **Manejo robusto de errores con retry automático**
+- [x] **Testing y validación automática**
+- [x] **Monitoreo de rendimiento en tiempo real**
 
 ### 🔄 En Progreso
 
-- [ ] Sistema de caché de datos
 - [ ] Panel de configuración de usuario
-- [ ] Optimizaciones de rendimiento
+- [ ] Internacionalización
 
 ### 📅 Futuro
 
-- [ ] Testing integral
-- [ ] Internacionalización
 - [ ] Soporte para otros portales inmobiliarios
 - [ ] Análisis de tendencias de mercado
 - [ ] Exportación de datos
+- [ ] Análisis de ROI a largo plazo
 
 ## 📄 Licencia
 

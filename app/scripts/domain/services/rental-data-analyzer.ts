@@ -1,6 +1,8 @@
 import { RentalData, PropertyData } from '../interfaces';
 import { Logger } from '../../infrastructure/logger';
 import { IPropertyExtractor } from './property-extractor';
+import { ICacheService } from './cache-service';
+import { IErrorHandler, ErrorContext } from './error-handler';
 
 export interface IRentalDataAnalyzer {
   fetchRentalData(rentalUrl: string): Promise<RentalData | null>;
@@ -9,12 +11,31 @@ export interface IRentalDataAnalyzer {
 export class RentalDataAnalyzer implements IRentalDataAnalyzer {
   constructor(
     private logger: Logger,
-    private propertyExtractor: IPropertyExtractor
+    private propertyExtractor: IPropertyExtractor,
+    private cacheService: ICacheService,
+    private errorHandler: IErrorHandler
   ) {}
 
   async fetchRentalData(rentalUrl: string): Promise<RentalData | null> {
+    const cacheKey = this.createCacheKey(rentalUrl);
+    
+    // Check cache first
+    const cachedData = this.cacheService.get(cacheKey);
+    if (cachedData) {
+      return cachedData;
+    }
+
+    return this.fetchWithRetry(rentalUrl, cacheKey, 1);
+  }
+
+  private async fetchWithRetry(rentalUrl: string, cacheKey: string, attempt: number): Promise<RentalData | null> {
+    const context: ErrorContext = {
+      operation: 'fetchRentalData',
+      url: rentalUrl
+    };
+
     try {
-      this.logger.log(`Fetching rental data from: ${rentalUrl}`);
+      this.logger.log(`Fetching rental data (attempt ${attempt}): ${rentalUrl}`);
       
       const response = await fetch(rentalUrl, {
         method: 'GET',
@@ -26,17 +47,45 @@ export class RentalDataAnalyzer implements IRentalDataAnalyzer {
       });
 
       if (!response.ok) {
-        this.logger.error(`Failed to fetch rental data: ${response.status}`);
-        return null;
+        throw new Error(`HTTP ${response.status}: Failed to fetch rental data`);
       }
 
       const html = await response.text();
-      return this.parseRentalDataFromHtml(html);
+      const data = this.parseRentalDataFromHtml(html);
+      
+      if (data) {
+        this.cacheService.set(cacheKey, data);
+      }
+      
+      return data;
       
     } catch (error) {
-      this.logger.error('Error fetching rental data', error);
+      this.errorHandler.handleError(error as Error, context);
+      
+      if (this.errorHandler.shouldRetry(error as Error, attempt)) {
+        const delay = this.errorHandler.getRetryDelay(attempt);
+        this.logger.log(`Retrying in ${delay}ms (attempt ${attempt + 1})`);
+        
+        await this.delay(delay);
+        return this.fetchWithRetry(rentalUrl, cacheKey, attempt + 1);
+      }
+      
       return null;
     }
+  }
+
+  private createCacheKey(url: string): string {
+    // Create a normalized cache key from the URL
+    try {
+      const urlObj = new URL(url);
+      return `${urlObj.pathname}${urlObj.search}`;
+    } catch {
+      return url;
+    }
+  }
+
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   private parseRentalDataFromHtml(html: string): RentalData | null {

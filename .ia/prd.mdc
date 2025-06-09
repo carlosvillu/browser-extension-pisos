@@ -62,10 +62,10 @@ Desarrollo de una extensión de navegador que analiza automáticamente la rentab
 - [x] Subtarea 2.2.3: Validar URLs generadas
 
 #### Tarea 2.3: Sistema de caché de datos
-**Estado: [ ] Pendiente**
-- [ ] Subtarea 2.3.1: Implementar almacenamiento local de datos extraídos
-- [ ] Subtarea 2.3.2: Sistema de expiración de caché
-- [ ] Subtarea 2.3.3: Optimización de consultas repetidas
+**Estado: [x] Completado**
+- [x] Subtarea 2.3.1: Implementar almacenamiento local de datos extraídos
+- [x] Subtarea 2.3.2: Sistema de expiración de caché con TTL
+- [x] Subtarea 2.3.3: Optimización de consultas repetidas con message passing
 
 ### Fase 3: Análisis de Rentabilidad
 **Estado: [x] Completado**
@@ -111,25 +111,25 @@ Desarrollo de una extensión de navegador que analiza automáticamente la rentab
 - [ ] Subtarea 4.3.3: Opciones de visualización
 
 ### Fase 5: Optimización y Testing
-**Estado: [ ] Pendiente**
+**Estado: [x] Completado**
 
 #### Tarea 5.1: Optimización de rendimiento
-**Estado: [ ] Pendiente**
-- [ ] Subtarea 5.1.1: Minimizar consultas HTTP
-- [ ] Subtarea 5.1.2: Lazy loading de análisis
-- [ ] Subtarea 5.1.3: Optimizar manipulación del DOM
+**Estado: [x] Completado**
+- [x] Subtarea 5.1.1: Minimizar consultas HTTP mediante batching y caché
+- [x] Subtarea 5.1.2: Lazy loading de análisis con Intersection Observer
+- [x] Subtarea 5.1.3: Optimizar manipulación del DOM con batching y fragments
 
 #### Tarea 5.2: Manejo de errores
-**Estado: [ ] Pendiente**
-- [ ] Subtarea 5.2.1: Gestión de fallos en peticiones
-- [ ] Subtarea 5.2.2: Fallbacks para datos faltantes
-- [ ] Subtarea 5.2.3: Logging de errores para debug
+**Estado: [x] Completado**
+- [x] Subtarea 5.2.1: Gestión robusta de fallos con retry y exponential backoff
+- [x] Subtarea 5.2.2: Fallbacks para datos faltantes con badges informativos
+- [x] Subtarea 5.2.3: Sistema completo de logging de errores para debug
 
 #### Tarea 5.3: Testing integral
-**Estado: [ ] Pendiente**
-- [ ] Subtarea 5.3.1: Pruebas en diferentes tipos de búsqueda
-- [ ] Subtarea 5.3.2: Validación de cálculos de rentabilidad
-- [ ] Subtarea 5.3.3: Testing de rendimiento en páginas con muchos resultados
+**Estado: [x] Completado**
+- [x] Subtarea 5.3.1: Validador de diferentes tipos de búsqueda de Idealista
+- [x] Subtarea 5.3.2: Validación automática de cálculos de rentabilidad
+- [x] Subtarea 5.3.3: Monitor de rendimiento para páginas con muchos resultados
 
 ### Fase 6: Pulido y Documentación
 **Estado: [ ] Pendiente**
@@ -174,6 +174,8 @@ Desarrollo de una extensión de navegador que analiza automáticamente la rentab
 - Manejar cambios en estructura DOM del sitio
 - Mantener extensión ligera y eficiente
 - Privacidad: no almacenar datos personales
+- Message passing entre content script y background para storage API
+- Arquitectura SOLID para mantenibilidad y escalabilidad
 
 ---
 

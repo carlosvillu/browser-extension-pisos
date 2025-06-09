@@ -4,6 +4,8 @@ import { Logger } from '../infrastructure/logger';
 export interface IUIRenderer {
   renderBadge(property: PropertyData, analysis: ProfitabilityAnalysis): void;
   renderLoadingBadge(property: PropertyData): void;
+  renderNoDataBadge(property: PropertyData): void;
+  renderErrorBadge(property: PropertyData): void;
   removeBadge(property: PropertyData): void;
 }
 
@@ -45,6 +47,52 @@ export class InvestmentUIRenderer implements IUIRenderer {
     if (multimediaContainer) {
       multimediaContainer.appendChild(badge);
       this.logger.log(`Loading badge rendered for property ${property.id}`);
+    }
+  }
+
+  renderNoDataBadge(property: PropertyData): void {
+    const propertyElement = this.findPropertyElement(property.id);
+    if (!propertyElement) return;
+
+    this.removeBadge(property);
+
+    const badge = document.createElement('div');
+    badge.className = 'investment-badge investment-badge--no-data';
+    badge.setAttribute('data-property-id', property.id);
+    badge.innerHTML = `
+      <div class="investment-badge__content">
+        <div class="investment-badge__icon">📊</div>
+        <div class="investment-badge__text">Sin datos de alquiler</div>
+      </div>
+    `;
+
+    const multimediaContainer = propertyElement.querySelector('.item-multimedia');
+    if (multimediaContainer) {
+      multimediaContainer.appendChild(badge);
+      this.logger.log(`No data badge rendered for property ${property.id}`);
+    }
+  }
+
+  renderErrorBadge(property: PropertyData): void {
+    const propertyElement = this.findPropertyElement(property.id);
+    if (!propertyElement) return;
+
+    this.removeBadge(property);
+
+    const badge = document.createElement('div');
+    badge.className = 'investment-badge investment-badge--error';
+    badge.setAttribute('data-property-id', property.id);
+    badge.innerHTML = `
+      <div class="investment-badge__content">
+        <div class="investment-badge__icon">⚠️</div>
+        <div class="investment-badge__text">Error en análisis</div>
+      </div>
+    `;
+
+    const multimediaContainer = propertyElement.querySelector('.item-multimedia');
+    if (multimediaContainer) {
+      multimediaContainer.appendChild(badge);
+      this.logger.log(`Error badge rendered for property ${property.id}`);
     }
   }
 

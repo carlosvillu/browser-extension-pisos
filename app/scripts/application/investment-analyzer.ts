@@ -6,6 +6,10 @@ import { IRentalDataAnalyzer, RentalDataAnalyzer } from '../domain/services/rent
 import { IProfitabilityCalculator, ProfitabilityCalculator } from '../domain/services/profitability-calculator';
 import { IUrlGenerator, CrossReferenceUrlGenerator } from '../domain/services/url-generator';
 import { IUIRenderer, InvestmentUIRenderer } from '../presentation/ui-renderer';
+import { ICacheService } from '../domain/services/cache-service';
+import { ContentCacheService } from '../domain/services/content-cache-service';
+import { IErrorHandler, RobustErrorHandler } from '../domain/services/error-handler';
+import { SimpleLazyLoader, IntersectionSimpleLazyLoader } from '../domain/services/simple-lazy-loader';
 
 export interface IInvestmentAnalyzer {
   initialize(): void;
@@ -19,15 +23,26 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
   private profitabilityCalculator: IProfitabilityCalculator;
   private urlGenerator: IUrlGenerator;
   private uiRenderer: IUIRenderer;
+  private cacheService: ICacheService;
+  private errorHandler: IErrorHandler;
+  private lazyLoader: SimpleLazyLoader;
 
   constructor() {
     this.logger = new Logger('IdealistaInvestmentAnalyzer');
     this.urlAnalyzer = new UrlAnalyzer(this.logger);
     this.propertyExtractor = new PropertyExtractor(this.logger);
-    this.rentalDataAnalyzer = new RentalDataAnalyzer(this.logger, this.propertyExtractor);
+    this.cacheService = new ContentCacheService(this.logger);
+    this.errorHandler = new RobustErrorHandler(this.logger);
+    this.rentalDataAnalyzer = new RentalDataAnalyzer(
+      this.logger, 
+      this.propertyExtractor, 
+      this.cacheService, 
+      this.errorHandler
+    );
     this.profitabilityCalculator = new ProfitabilityCalculator(this.logger);
     this.urlGenerator = new CrossReferenceUrlGenerator(this.logger);
     this.uiRenderer = new InvestmentUIRenderer(this.logger);
+    this.lazyLoader = new IntersectionSimpleLazyLoader(this.logger);
   }
 
   initialize(): void {
@@ -61,7 +76,7 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
     }
   }
 
-  private async processProperties(properties: PropertyData[], urlAnalysis: UrlAnalysisResult): Promise<void> {
+  private processProperties(properties: PropertyData[], urlAnalysis: UrlAnalysisResult): void {
     this.logger.log('Processing properties for investment analysis');
     
     if (urlAnalysis.searchType !== 'venta') {
@@ -69,14 +84,49 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
       return;
     }
 
+    // Use lazy loading to prevent overwhelming Idealista
+    const propertyElements = properties.map(property => {
+      const element = document.querySelector(`article.item[data-element-id="${property.id}"]`);
+      return { property, element };
+    }).filter(item => item.element !== null);
+
+    if (propertyElements.length === 0) {
+      this.logger.log('No property elements found, processing directly with delays');
+      this.processBatch(properties, urlAnalysis);
+      return;
+    }
+
+    const elements = propertyElements.map(item => item.element!);
+    
+    this.lazyLoader.observeElements(elements, (element) => {
+      const propertyData = propertyElements.find(item => item.element === element)?.property;
+      if (propertyData) {
+        this.analyzePropertyProfitability(propertyData, urlAnalysis);
+      }
+    });
+  }
+
+  private async processBatch(properties: PropertyData[], urlAnalysis: UrlAnalysisResult): Promise<void> {
+    this.logger.log('Processing properties in batch mode with delays');
+    
     for (const property of properties) {
       await this.analyzePropertyProfitability(property, urlAnalysis);
-      await this.delay(1000);
+      await this.delay(2000); // 2 second delay between properties to avoid rate limiting
     }
+  }
+
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   private async analyzePropertyProfitability(property: PropertyData, urlAnalysis: UrlAnalysisResult): Promise<void> {
     this.logger.log(`Analyzing property ${property.id}: ${property.price}€ - ${property.rooms} hab., ${property.size}m²`);
+    
+    const context = {
+      operation: 'analyzePropertyProfitability',
+      propertyId: property.id,
+      additionalData: { price: property.price, rooms: property.rooms, size: property.size }
+    };
     
     try {
       this.uiRenderer.renderLoadingBadge(property);
@@ -93,15 +143,21 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
         this.uiRenderer.renderBadge(property, analysis);
       } else {
         this.logger.log(`No rental data found for property ${property.id}`);
-        this.uiRenderer.removeBadge(property);
+        this.handleMissingData(property);
       }
     } catch (error) {
-      this.logger.error(`Error analyzing property ${property.id}`, error);
-      this.uiRenderer.removeBadge(property);
+      this.errorHandler.handleError(error as Error, context);
+      this.handleAnalysisError(property);
     }
   }
 
-  private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  private handleMissingData(property: PropertyData): void {
+    // Fallback: show a neutral badge indicating no data available
+    this.uiRenderer.renderNoDataBadge(property);
+  }
+
+  private handleAnalysisError(property: PropertyData): void {
+    // Fallback: remove loading badge and optionally show error badge
+    this.uiRenderer.removeBadge(property);
   }
 }
