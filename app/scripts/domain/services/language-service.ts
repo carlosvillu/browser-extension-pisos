@@ -1,5 +1,22 @@
 export class LanguageService {
-  private currentLanguage: string = 'en'; // Default to English
+  // Supported languages - ADD NEW LANGUAGES HERE
+  // When adding a new language:
+  // 1. Add language code to SUPPORTED_LANGUAGES array
+  // 2. Add locale mapping to LOCALE_MAP object  
+  // 3. Add translations dictionary in loadMessages() method
+  // 4. Create _locales/{lang}/ directory with messages.json and detailed-description.txt
+  // 5. Add option to popup.html language selector
+  private static readonly SUPPORTED_LANGUAGES = ['es', 'en', 'fr'];
+  private static readonly DEFAULT_LANGUAGE = 'en';
+  
+  // Locale mapping for formatting - ADD NEW LOCALES HERE
+  private static readonly LOCALE_MAP: Record<string, string> = {
+    'es': 'es-ES',
+    'en': 'en-US', 
+    'fr': 'fr-FR'
+  };
+
+  private currentLanguage: string = LanguageService.DEFAULT_LANGUAGE;
   private messages: Record<string, Record<string, string>> = {};
   private initialized: boolean = false;
 
@@ -13,21 +30,38 @@ export class LanguageService {
     try {
       // Try to get saved language from storage
       const result = await chrome.storage.local.get(['language']);
-      if (result.language && (result.language === 'es' || result.language === 'en')) {
+      if (result.language && this.isValidLanguage(result.language)) {
         this.currentLanguage = result.language;
       } else {
         // If no saved language, check browser language
         const browserLang = this.getBrowserLanguage();
-        this.currentLanguage = (browserLang === 'es') ? 'es' : 'en';
+        this.currentLanguage = this.isValidLanguage(browserLang) ? browserLang : LanguageService.DEFAULT_LANGUAGE;
         // Save the determined language
         await chrome.storage.local.set({ language: this.currentLanguage });
       }
     } catch (error) {
       console.warn('Error initializing language:', error);
-      this.currentLanguage = 'en'; // Fallback to English
+      this.currentLanguage = LanguageService.DEFAULT_LANGUAGE; // Fallback to default
     }
     
     this.initialized = true;
+  }
+
+  /**
+   * Check if a language is supported by the service
+   * @param language Language code to validate
+   * @returns true if language is supported
+   */
+  private isValidLanguage(language: string): boolean {
+    return LanguageService.SUPPORTED_LANGUAGES.includes(language);
+  }
+
+  /**
+   * Get the list of supported languages
+   * @returns Array of supported language codes
+   */
+  public static getSupportedLanguages(): string[] {
+    return [...LanguageService.SUPPORTED_LANGUAGES];
   }
 
   private getBrowserLanguage(): string {
@@ -46,6 +80,7 @@ export class LanguageService {
       languageSelector: 'Idioma',
       languageSpanish: 'Español',
       languageEnglish: 'Inglés',
+      languageFrench: 'Francés',
       estimatedExpensesTitle: 'Gastos Estimados',
       propertyManagementLabel: 'Gestión inmobiliaria (€)',
       monthlyFixedCost: 'Coste mensual fijo',
@@ -107,6 +142,7 @@ export class LanguageService {
       languageSelector: 'Language',
       languageSpanish: 'Spanish',
       languageEnglish: 'English',
+      languageFrench: 'French',
       estimatedExpensesTitle: 'Estimated Expenses',
       propertyManagementLabel: 'Property management (€)',
       monthlyFixedCost: 'Monthly fixed cost',
@@ -159,10 +195,72 @@ export class LanguageService {
       netAnnualProfitability: 'Net annual profitability',
       riskLevel: 'Risk level: '
     };
+
+    // French messages
+    this.messages['fr'] = {
+      appName: 'Analyse d\'Investissement Immobilier',
+      popupTitle: 'Configuration - Analyse d\'Investissement',
+      configurationTitle: 'Configuration de l\'Analyse',
+      languageSelector: 'Langue',
+      languageSpanish: 'Espagnol',
+      languageEnglish: 'Anglais',
+      languageFrench: 'Français',
+      estimatedExpensesTitle: 'Dépenses Estimées',
+      propertyManagementLabel: 'Gestion immobilière (€)',
+      monthlyFixedCost: 'Coût mensuel fixe',
+      insuranceLabel: 'Assurance (€)',
+      ibiLabel: 'Taxe foncière (€)',
+      vacancyLabel: 'Vacance (%)',
+      rentalPercentage: '% du revenu locatif',
+      repairsLabel: 'Réparations et contingences (%)',
+      repairsHelp: '% du loyer pour chauffage, pannes, améliorations, etc.',
+      communityLabel: 'Charges de copropriété (€)',
+      communityHelp: 'Charges mensuelles de copropriété',
+      mortgageConfigTitle: 'Configuration Hypothécaire',
+      financingLabel: 'Financement (%)',
+      priceFinnancedPercentage: '% du prix financé',
+      interestLabel: 'Intérêt (%)',
+      annualTinHelp: 'Taux d\'intérêt annuel de l\'hypothèque',
+      managementFeesLabel: 'Frais de gestion (%)',
+      managementFeesHelp: '% du prix d\'achat (notaire, registre, évaluation, etc.)',
+      profitabilityThresholdsTitle: 'Seuils de Rentabilité',
+      excellentLabel: 'Excellent (%)',
+      goodLabel: 'Bon (%)',
+      regularLabel: 'Régulier (%)',
+      displayOptionsTitle: 'Options d\'Affichage',
+      showProfitabilityIndicators: 'Afficher les indicateurs de rentabilité',
+      allowDetailsModal: 'Permettre le modal de détails',
+      showLoadingStates: 'Afficher les états de chargement',
+      restoreButton: 'Restaurer',
+      saveButton: 'Sauvegarder',
+      errorLoadingConfig: 'Erreur lors du chargement de la configuration',
+      configSavedSuccessfully: 'Configuration sauvegardée avec succès',
+      errorSavingConfig: 'Erreur lors de la sauvegarde de la configuration',
+      configRestoredSuccessfully: 'Configuration restaurée aux valeurs par défaut',
+      errorRestoringConfig: 'Erreur lors de la restauration de la configuration',
+      analyzing: 'Analyse en cours...',
+      noRentalData: 'Aucune donnée locative',
+      analysisError: 'Erreur d\'analyse',
+      netProfitability: 'Rentabilité Nette:',
+      excellentInvestment: 'EXCELLENT INVESTISSEMENT',
+      goodInvestment: 'BON INVESTISSEMENT',
+      regularInvestment: 'INVESTISSEMENT RÉGULIER',
+      badInvestment: 'MAUVAIS INVESTISSEMENT',
+      unknownInvestment: 'INCONNU',
+      investmentAnalysisTitle: 'Analyse d\'Investissement',
+      roomsSuffix: ' pièces',
+      sizeSuffix: 'm²',
+      purchasePrice: 'Prix d\'achat',
+      monthlyRentalEstimate: 'Estimation du loyer mensuel',
+      monthlyExpensesEstimate: 'Estimation des dépenses mensuelles',
+      grossAnnualProfitability: 'Rentabilité annuelle brute',
+      netAnnualProfitability: 'Rentabilité annuelle nette',
+      riskLevel: 'Niveau de risque: '
+    };
   }
 
   public async setLanguage(language: string): Promise<void> {
-    if (language === 'es' || language === 'en') {
+    if (this.isValidLanguage(language)) {
       this.currentLanguage = language;
       try {
         await chrome.storage.local.set({ language: language });
@@ -177,13 +275,24 @@ export class LanguageService {
   private notifyLanguageChange(language: string): void {
     // Send message to active tab only
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0]?.id && tabs[0].url?.includes('idealista.com')) {
-        chrome.tabs.sendMessage(tabs[0].id, {
-          type: 'LANGUAGE_CHANGED',
-          language: language
-        }).catch(() => {
-          // Ignore errors if content script is not loaded
-        });
+      const tab = tabs[0];
+      if (tab?.id && tab.url) {
+        console.log('Current tab URL:', tab.url);
+        if (tab.url.includes('idealista.com')) {
+          console.log('Sending language change message to Idealista tab. Language:', language);
+          chrome.tabs.sendMessage(tab.id, {
+            type: 'LANGUAGE_CHANGED',
+            language: language
+          }).then(() => {
+            console.log('Language change message sent successfully');
+          }).catch((error) => {
+            console.warn('Error sending language change message:', error);
+          });
+        } else {
+          console.log('Not an Idealista tab, skipping message send');
+        }
+      } else {
+        console.warn('No active tab found or tab has no URL');
       }
     });
   }
@@ -195,7 +304,7 @@ export class LanguageService {
   public async loadLanguageFromStorage(): Promise<void> {
     try {
       const result = await chrome.storage.local.get(['language']);
-      if (result.language && (result.language === 'es' || result.language === 'en')) {
+      if (result.language && this.isValidLanguage(result.language)) {
         this.currentLanguage = result.language;
       }
     } catch (error) {
@@ -209,7 +318,7 @@ export class LanguageService {
 
   public formatCurrency(amount: number, currency: string = 'EUR'): string {
     try {
-      const locale = this.currentLanguage === 'es' ? 'es-ES' : 'en-US';
+      const locale = LanguageService.LOCALE_MAP[this.currentLanguage] || LanguageService.LOCALE_MAP[LanguageService.DEFAULT_LANGUAGE];
       return new Intl.NumberFormat(locale, {
         style: 'currency',
         currency: currency,
@@ -224,7 +333,7 @@ export class LanguageService {
 
   public formatPercentage(value: number, decimals: number = 2): string {
     try {
-      const locale = this.currentLanguage === 'es' ? 'es-ES' : 'en-US';
+      const locale = LanguageService.LOCALE_MAP[this.currentLanguage] || LanguageService.LOCALE_MAP[LanguageService.DEFAULT_LANGUAGE];
       return new Intl.NumberFormat(locale, {
         style: 'percent',
         minimumFractionDigits: decimals,

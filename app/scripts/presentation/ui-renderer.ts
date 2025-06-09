@@ -13,12 +13,13 @@ export interface IUIRenderer {
 
 export class InvestmentUIRenderer implements IUIRenderer {
   private configService: ConfigService;
-  private languageService: LanguageService;
   private userConfig?: UserConfig;
 
-  constructor(private logger: Logger) {
+  constructor(
+    private logger: Logger,
+    private languageService: LanguageService
+  ) {
     this.configService = new ConfigService();
-    this.languageService = new LanguageService();
   }
 
   async renderBadge(property: PropertyData, analysis: ProfitabilityAnalysis): Promise<void> {
@@ -202,7 +203,7 @@ export class InvestmentUIRenderer implements IUIRenderer {
   }
 
   private openAnalysisModal(property: PropertyData, analysis: ProfitabilityAnalysis): void {
-    const modalRenderer = new ModalRenderer(this.logger);
+    const modalRenderer = new ModalRenderer(this.logger, this.languageService);
     modalRenderer.openModal(property, analysis);
   }
 
@@ -223,11 +224,10 @@ export class InvestmentUIRenderer implements IUIRenderer {
 }
 
 class ModalRenderer {
-  private languageService: LanguageService;
-
-  constructor(private logger: Logger) {
-    this.languageService = new LanguageService();
-  }
+  constructor(
+    private logger: Logger,
+    private languageService: LanguageService
+  ) {}
 
   openModal(property: PropertyData, analysis: ProfitabilityAnalysis): void {
     const existingModal = document.querySelector('.investment-modal-overlay');

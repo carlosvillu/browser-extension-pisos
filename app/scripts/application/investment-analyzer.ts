@@ -28,7 +28,7 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
   private errorHandler: IErrorHandler;
   private lazyLoader: SimpleLazyLoader;
 
-  constructor() {
+  constructor(private languageService: LanguageService) {
     this.logger = new Logger('IdealistaInvestmentAnalyzer');
     this.urlAnalyzer = new UrlAnalyzer(this.logger);
     this.propertyExtractor = new PropertyExtractor(this.logger);
@@ -42,7 +42,10 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
     );
     this.profitabilityCalculator = new ProfitabilityCalculator(this.logger);
     this.urlGenerator = new CrossReferenceUrlGenerator(this.logger);
-    this.uiRenderer = new InvestmentUIRenderer(this.logger);
+    this.uiRenderer = new InvestmentUIRenderer(
+      this.logger, 
+      this.languageService
+    );
     this.lazyLoader = new IntersectionSimpleLazyLoader(this.logger);
   }
 

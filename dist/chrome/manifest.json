@@ -1,6 +1,6 @@
 {
-  "name": "Análisis de Inversión Inmobiliaria",
-  "description": "Analiza automáticamente la rentabilidad de propiedades inmobiliarias en Idealista.com",
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
   "version": "1.0.0",
   "short_name": "idealista-investment",
   "manifest_version": 3,
@@ -11,7 +11,7 @@
     "128": "images/icon-128.png"
   },
   "minimum_chrome_version": "88.0",
-  "default_locale": "en",
+  "default_locale": "es",
   "content_scripts": [
     {
       "matches": [
@@ -32,11 +32,12 @@
   },
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "tabs"
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Análisis de Inversión Inmobiliaria",
+    "default_title": "__MSG_appName__",
     "default_icon": {
       "16": "images/icon-16.png",
       "32": "images/icon-32.png",
