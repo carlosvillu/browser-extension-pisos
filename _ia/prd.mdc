@@ -132,13 +132,13 @@ Desarrollo de una extensión de navegador que analiza automáticamente la rentab
 - [x] Subtarea 5.3.3: Monitor de rendimiento para páginas con muchos resultados
 
 ### Fase 6: Pulido y Documentación
-**Estado: [x] Completado**
+**Estado: [ ] Pendiente**
 
 #### Tarea 6.1: Mejoras de UX
-**Estado: [x] Completado**
-- [x] Subtarea 6.1.1: Animaciones suaves para indicadores
-- [x] Subtarea 6.1.2: Estados de carga mientras analiza
-- [x] Subtarea 6.1.3: Feedback visual de acciones del usuario
+**Estado: [ ] Pendiente**
+- [ ] Subtarea 6.1.1: Animaciones suaves para indicadores
+- [ ] Subtarea 6.1.2: Estados de carga mientras analiza
+- [ ] Subtarea 6.1.3: Feedback visual de acciones del usuario
 
 #### Tarea 6.2: Internacionalización
 **Estado: [x] Completado**

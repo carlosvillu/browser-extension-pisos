@@ -66,12 +66,7 @@ export class InvestmentUIRenderer implements IUIRenderer {
     const badge = document.createElement('div');
     badge.className = 'investment-badge investment-badge--loading';
     badge.setAttribute('data-property-id', property.id);
-    badge.innerHTML = `
-      <div class="investment-badge__content">
-        <div class="loading-spinner"></div>
-        <div class="investment-badge__text">${this.languageService.getMessage('analyzing')}</div>
-      </div>
-    `;
+    badge.textContent = this.languageService.getMessage('analyzing');
 
     const multimediaContainer = propertyElement.querySelector('.item-multimedia');
     if (multimediaContainer) {
@@ -139,10 +134,6 @@ export class InvestmentUIRenderer implements IUIRenderer {
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'investment-analysis-container';
     buttonContainer.setAttribute('data-property-id', analysis.propertyId);
-    
-    // Add staggered animation delay based on property position
-    const delay = this.getStaggeredDelay(analysis.propertyId);
-    buttonContainer.style.animationDelay = `${delay}ms`;
 
     const button = document.createElement('button');
     button.className = `investment-analysis-button investment-analysis-button--${analysis.recommendation}`;
@@ -163,9 +154,6 @@ export class InvestmentUIRenderer implements IUIRenderer {
       e.preventDefault();
       e.stopPropagation();
 
-      // Add ripple effect
-      this.addRippleEffect(button);
-
       if (!this.userConfig) {
         this.userConfig = await this.configService.getConfig();
       }
@@ -179,27 +167,6 @@ export class InvestmentUIRenderer implements IUIRenderer {
     buttonContainer.appendChild(button);
 
     return buttonContainer;
-  }
-
-  private getStaggeredDelay(propertyId: string): number {
-    // Create a simple hash-based delay to ensure consistent staggering
-    const hash = propertyId.split('').reduce((a, b) => {
-      a = ((a << 5) - a) + b.charCodeAt(0);
-      return a & a;
-    }, 0);
-    
-    // Return a delay between 0-200ms based on the hash
-    return Math.abs(hash % 200);
-  }
-
-  private addRippleEffect(button: HTMLElement): void {
-    // Add clicked class for ripple animation
-    button.classList.add('clicked');
-    
-    // Remove the class after animation completes
-    setTimeout(() => {
-      button.classList.remove('clicked');
-    }, 600);
   }
 
   private openAnalysisModal(property: PropertyData, analysis: ProfitabilityAnalysis): void {
