@@ -1,8 +1,9 @@
 import { PropertyData, RentalData, ProfitabilityAnalysis } from '../interfaces';
 import { Logger } from '../../infrastructure/logger';
+import { ConfigService, UserConfig } from './config-service';
 
 export interface IProfitabilityCalculator {
-  calculateProfitability(property: PropertyData, rentalData: RentalData): ProfitabilityAnalysis;
+  calculateProfitability(property: PropertyData, rentalData: RentalData): Promise<ProfitabilityAnalysis>;
 }
 
 export interface ExpenseCalculationConfig {
@@ -24,21 +25,31 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
     vacancyMaintenanceRate: 0.05
   };
 
+  private configService: ConfigService;
+  private userConfig?: UserConfig;
+
   constructor(
     private logger: Logger,
     private config: ExpenseCalculationConfig = {} as ExpenseCalculationConfig
   ) {
     this.config = { ...this.DEFAULT_CONFIG, ...config };
+    this.configService = new ConfigService();
   }
 
-  calculateProfitability(property: PropertyData, rentalData: RentalData): ProfitabilityAnalysis {
+  async calculateProfitability(property: PropertyData, rentalData: RentalData): Promise<ProfitabilityAnalysis> {
+    if (!this.userConfig) {
+      this.userConfig = await this.configService.getConfig();
+    }
+
+    const activeConfig = this.userConfig.expenseConfig;
+    
     const monthlyRent = rentalData.averagePrice;
     const annualRent = monthlyRent * 12;
     const purchasePrice = property.price;
 
     const grossYield = (annualRent / purchasePrice) * 100;
 
-    const monthlyExpenses = this.calculateMonthlyExpenses(property, monthlyRent);
+    const monthlyExpenses = this.calculateMonthlyExpenses(property, monthlyRent, activeConfig);
     const annualExpenses = monthlyExpenses * 12;
     const netAnnualRent = annualRent - annualExpenses;
 
@@ -60,25 +71,17 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
     };
   }
 
-  private calculateMonthlyExpenses(property: PropertyData, monthlyRent: number): number {
+  private calculateMonthlyExpenses(property: PropertyData, monthlyRent: number, expenseConfig: any): number {
     let expenses = 0;
 
-    expenses += monthlyRent * this.config.propertyManagementRate;
+    expenses += expenseConfig.propertyManagementMonthly || 150;
+    expenses += expenseConfig.insuranceMonthly || 50;
+    expenses += expenseConfig.propertyTaxMonthly || 100;
 
-    const propertyValue = property.price;
-    const annualInsurance = propertyValue * this.config.insuranceRate;
-    expenses += annualInsurance / 12;
+    expenses += expenseConfig.communityFees || 60;
 
-    const annualIBI = propertyValue * this.config.propertyTaxRate;
-    expenses += annualIBI / 12;
-
-    if (property.hasGarage || property.floor?.includes('ascensor')) {
-      expenses += this.config.communityFeesWithGarage;
-    } else {
-      expenses += this.config.communityFeesWithoutGarage;
-    }
-
-    expenses += monthlyRent * this.config.vacancyMaintenanceRate;
+    expenses += monthlyRent * (expenseConfig.vacancyMaintenanceRate || 0.05);
+    expenses += monthlyRent * (expenseConfig.maintenanceContingencyRate || 0.01);
 
     return Math.round(expenses);
   }
@@ -90,11 +93,17 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
     let recommendation: 'excellent' | 'good' | 'fair' | 'poor';
     let riskLevel: 'low' | 'medium' | 'high';
 
-    if (netYield >= 6) {
+    const thresholds = this.userConfig?.profitabilityThresholds || {
+      excellent: 6,
+      good: 4,
+      fair: 2
+    };
+
+    if (netYield >= thresholds.excellent) {
       recommendation = 'excellent';
-    } else if (netYield >= 4) {
+    } else if (netYield >= thresholds.good) {
       recommendation = 'good';
-    } else if (netYield >= 2) {
+    } else if (netYield >= thresholds.fair) {
       recommendation = 'fair';
     } else {
       recommendation = 'poor';
