@@ -50,7 +50,9 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
     const grossYield = (annualRent / purchasePrice) * 100;
 
     const monthlyExpenses = this.calculateMonthlyExpenses(property, monthlyRent, activeConfig);
-    const annualExpenses = monthlyExpenses * 12;
+    const monthlyMortgage = this.calculateMonthlyMortgage(purchasePrice, activeConfig);
+    const totalMonthlyExpenses = monthlyExpenses + monthlyMortgage;
+    const annualExpenses = totalMonthlyExpenses * 12;
     const netAnnualRent = annualRent - annualExpenses;
 
     const netYield = Math.max(0, (netAnnualRent / purchasePrice) * 100);
@@ -58,7 +60,7 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
     const { recommendation, riskLevel } = this.evaluateInvestment(grossYield, netYield, rentalData.sampleSize);
 
     this.logger.log(
-      `Profitability calculation for ${property.id}: Gross ${grossYield.toFixed(2)}%, Net ${netYield.toFixed(2)}%`,
+      `Profitability calculation for ${property.id}: Gross ${grossYield.toFixed(2)}%, Net ${netYield.toFixed(2)}% (including mortgage ${monthlyMortgage}€/month)`,
     );
 
     return {
@@ -68,6 +70,7 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
       grossYield: Math.round(grossYield * 100) / 100,
       netYield: Math.round(netYield * 100) / 100,
       monthlyExpenses,
+      monthlyMortgage,
       recommendation,
       riskLevel,
     };
@@ -86,6 +89,26 @@ export class ProfitabilityCalculator implements IProfitabilityCalculator {
     expenses += monthlyRent * (expenseConfig.maintenanceContingencyRate || 0.01);
 
     return Math.round(expenses);
+  }
+
+  private calculateMonthlyMortgage(purchasePrice: number, expenseConfig: any): number {
+    const downPaymentPercentage = expenseConfig.downPaymentPercentage || 0.2;
+    const interestRate = expenseConfig.mortgageInterestRate || 0.035;
+    const loanTermYears = expenseConfig.loanTermYears || 30;
+
+    const loanAmount = purchasePrice * (1 - downPaymentPercentage);
+    const monthlyInterestRate = interestRate / 12;
+    const numberOfPayments = loanTermYears * 12;
+
+    if (loanAmount <= 0 || monthlyInterestRate === 0) {
+      return 0;
+    }
+
+    const monthlyPayment = loanAmount * 
+      (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) /
+      (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+
+    return Math.round(monthlyPayment);
   }
 
   private evaluateInvestment(

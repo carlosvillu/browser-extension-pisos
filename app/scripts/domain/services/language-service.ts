@@ -129,6 +129,7 @@ export class LanguageService {
       purchasePrice: 'Precio de compra',
       monthlyRentalEstimate: 'Alquiler estimado mensual',
       monthlyExpensesEstimate: 'Gastos mensuales estimados',
+      monthlyMortgageEstimate: 'Hipoteca mensual estimada',
       grossAnnualProfitability: 'Rentabilidad bruta anual',
       netAnnualProfitability: 'Rentabilidad neta anual',
       riskLevel: 'Nivel de riesgo: '
@@ -191,6 +192,7 @@ export class LanguageService {
       purchasePrice: 'Purchase price',
       monthlyRentalEstimate: 'Monthly rental estimate',
       monthlyExpensesEstimate: 'Monthly expenses estimate',
+      monthlyMortgageEstimate: 'Monthly mortgage estimate',
       grossAnnualProfitability: 'Gross annual profitability',
       netAnnualProfitability: 'Net annual profitability',
       riskLevel: 'Risk level: '
@@ -253,6 +255,7 @@ export class LanguageService {
       purchasePrice: 'Prix d\'achat',
       monthlyRentalEstimate: 'Estimation du loyer mensuel',
       monthlyExpensesEstimate: 'Estimation des dépenses mensuelles',
+      monthlyMortgageEstimate: 'Estimation de l\'hypothèque mensuelle',
       grossAnnualProfitability: 'Rentabilité annuelle brute',
       netAnnualProfitability: 'Rentabilité annuelle nette',
       riskLevel: 'Niveau de risque: '

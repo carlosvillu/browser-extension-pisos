@@ -207,6 +207,10 @@
     "message": "Monthly expenses estimate",
     "description": "Monthly expenses label"
   },
+  "monthlyMortgageEstimate": {
+    "message": "Monthly mortgage estimate",
+    "description": "Monthly mortgage label"
+  },
   "grossAnnualProfitability": {
     "message": "Gross annual profitability",
     "description": "Gross profitability label"
