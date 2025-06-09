@@ -94,8 +94,11 @@ class PopupController {
     const target = event.target as HTMLSelectElement;
     const newLanguage = target.value;
     
+    console.log('Popup: Language changed to:', newLanguage);
     await this.languageService.setLanguage(newLanguage);
+    console.log('Popup: Language service updated');
     this.localizeUI();
+    console.log('Popup: UI localized');
   }
 
   private async handleSubmit(event: Event): Promise<void> {
@@ -200,6 +203,7 @@ class PopupController {
       'language-selector-label': 'languageSelector',
       'language-option-es': 'languageSpanish',
       'language-option-en': 'languageEnglish',
+      'language-option-fr': 'languageFrench',
       'expenses-title': 'estimatedExpensesTitle',
       'property-management-label': 'propertyManagementLabel',
       'property-management-help': 'monthlyFixedCost',

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Configuración - Análisis de Inversión</title>
+  <title id="popup-title">Configuración - Análisis de Inversión</title>
   <style>
     * {
       box-sizing: border-box;
@@ -127,6 +127,22 @@
       background: #0770c1;
     }
 
+    .form-select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 13px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .form-select:focus {
+      outline: none;
+      border-color: #0984e3;
+      box-shadow: 0 0 0 2px rgba(9, 132, 227, 0.1);
+    }
+
     .button-secondary {
       background: #ddd;
       color: #636e72;
@@ -165,117 +181,129 @@
 </head>
 <body>
   <div class="popup-header">
-    <h1>Configuración de Análisis</h1>
+    <h1 id="config-header-title">Configuración de Análisis</h1>
   </div>
 
   <div class="popup-content">
     <form id="configForm">
+      <!-- Language Selector -->
       <div class="section">
-        <div class="section-title">Gastos Estimados</div>
+        <div class="form-group">
+          <label class="form-label" for="languageSelector" id="language-selector-label">Idioma</label>
+          <select id="languageSelector" class="form-select">
+            <option value="es" id="language-option-es">Español</option>
+            <option value="en" id="language-option-en">English</option>
+            <option value="fr" id="language-option-fr">Français</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title" id="expenses-title">Gastos Estimados</div>
         
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label" for="propertyManagement">Gestión inmobiliaria (€)</label>
+            <label class="form-label" for="propertyManagement" id="property-management-label">Gestión inmobiliaria (€)</label>
             <input type="number" id="propertyManagement" class="form-input" min="0" max="1000" step="1">
-            <div class="help-text">Coste mensual fijo</div>
+            <div class="help-text" id="property-management-help">Coste mensual fijo</div>
           </div>
           <div class="form-group">
-            <label class="form-label" for="insurance">Seguro (€)</label>
+            <label class="form-label" for="insurance" id="insurance-label">Seguro (€)</label>
             <input type="number" id="insurance" class="form-input" min="0" max="200" step="1">
-            <div class="help-text">Coste mensual fijo</div>
+            <div class="help-text" id="insurance-help">Coste mensual fijo</div>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label" for="propertyTax">IBI (€)</label>
+            <label class="form-label" for="propertyTax" id="property-tax-label">IBI (€)</label>
             <input type="number" id="propertyTax" class="form-input" min="0" max="500" step="1">
-            <div class="help-text">Coste mensual fijo</div>
+            <div class="help-text" id="property-tax-help">Coste mensual fijo</div>
           </div>
           <div class="form-group">
-            <label class="form-label" for="vacancyMaintenance">Vacancia (%)</label>
+            <label class="form-label" for="vacancyMaintenance" id="vacancy-label">Vacancia (%)</label>
             <input type="number" id="vacancyMaintenance" class="form-input" min="0" max="20" step="0.1">
-            <div class="help-text">% del alquiler</div>
+            <div class="help-text" id="vacancy-help">% del alquiler</div>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="maintenanceContingency">Reparaciones y contingencias (%)</label>
+          <label class="form-label" for="maintenanceContingency" id="maintenance-contingency-label">Reparaciones y contingencias (%)</label>
           <input type="number" id="maintenanceContingency" class="form-input" min="0" max="25" step="0.1">
-          <div class="help-text">% del alquiler para calentadores, averías, mejoras, etc.</div>
+          <div class="help-text" id="maintenance-contingency-help">% del alquiler para calentadores, averías, mejoras, etc.</div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="communityFees">Comunidad (€)</label>
+          <label class="form-label" for="communityFees" id="community-fees-label">Comunidad (€)</label>
           <input type="number" id="communityFees" class="form-input" min="0" max="500" step="1">
-          <div class="help-text">Gastos de comunidad mensual</div>
+          <div class="help-text" id="community-fees-help">Gastos de comunidad mensual</div>
         </div>
       </div>
 
       <div class="section">
-        <div class="section-title">Configuración de Hipoteca</div>
+        <div class="section-title" id="mortgage-title">Configuración de Hipoteca</div>
         
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label" for="loanToValue">Financiación (%)</label>
+            <label class="form-label" for="loanToValue" id="loan-to-value-label">Financiación (%)</label>
             <input type="number" id="loanToValue" class="form-input" min="0" max="100" step="1">
-            <div class="help-text">% del precio financiado</div>
+            <div class="help-text" id="loan-to-value-help">% del precio financiado</div>
           </div>
           <div class="form-group">
-            <label class="form-label" for="interestRate">Interés (%)</label>
+            <label class="form-label" for="interestRate" id="interest-rate-label">Interés (%)</label>
             <input type="number" id="interestRate" class="form-input" min="0" max="10" step="0.01">
-            <div class="help-text">TIN anual de la hipoteca</div>
+            <div class="help-text" id="interest-rate-help">TIN anual de la hipoteca</div>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="managementFees">Gastos de gestión (%)</label>
+          <label class="form-label" for="managementFees" id="management-fees-label">Gastos de gestión (%)</label>
           <input type="number" id="managementFees" class="form-input" min="0" max="20" step="0.1">
-          <div class="help-text">% del precio de compra (notaría, registro, tasación, etc.)</div>
+          <div class="help-text" id="management-fees-help">% del precio de compra (notaría, registro, tasación, etc.)</div>
         </div>
       </div>
 
       <div class="section">
-        <div class="section-title">Umbrales de Rentabilidad</div>
+        <div class="section-title" id="profitability-thresholds-title">Umbrales de Rentabilidad</div>
         
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label" for="excellentThreshold">Excelente (%)</label>
+            <label class="form-label" for="excellentThreshold" id="excellent-threshold-label">Excelente (%)</label>
             <input type="number" id="excellentThreshold" class="form-input" min="0" max="20" step="0.1">
           </div>
           <div class="form-group">
-            <label class="form-label" for="goodThreshold">Buena (%)</label>
+            <label class="form-label" for="goodThreshold" id="good-threshold-label">Buena (%)</label>
             <input type="number" id="goodThreshold" class="form-input" min="0" max="20" step="0.1">
           </div>
           <div class="form-group">
-            <label class="form-label" for="fairThreshold">Regular (%)</label>
+            <label class="form-label" for="fairThreshold" id="fair-threshold-label">Regular (%)</label>
             <input type="number" id="fairThreshold" class="form-input" min="0" max="20" step="0.1">
           </div>
         </div>
       </div>
 
       <div class="section">
-        <div class="section-title">Opciones de Visualización</div>
+        <div class="section-title" id="display-options-title">Opciones de Visualización</div>
         
         <div class="checkbox-group">
           <input type="checkbox" id="showBadges" class="checkbox">
-          <label for="showBadges" class="checkbox-label">Mostrar indicadores de rentabilidad</label>
+          <label for="showBadges" class="checkbox-label" id="show-badges-label">Mostrar indicadores de rentabilidad</label>
         </div>
         
         <div class="checkbox-group">
           <input type="checkbox" id="showModal" class="checkbox">
-          <label for="showModal" class="checkbox-label">Permitir modal de detalles</label>
+          <label for="showModal" class="checkbox-label" id="show-modal-label">Permitir modal de detalles</label>
         </div>
         
         <div class="checkbox-group">
           <input type="checkbox" id="showLoadingStates" class="checkbox">
-          <label for="showLoadingStates" class="checkbox-label">Mostrar estados de carga</label>
+          <label for="showLoadingStates" class="checkbox-label" id="show-loading-states-label">Mostrar estados de carga</label>
         </div>
       </div>
 
       <div class="button-group">
-        <button type="button" id="resetButton" class="button button-secondary">Restaurar</button>
-        <button type="submit" class="button button-primary">Guardar</button>
+        <button type="button" id="resetButton" class="button button-secondary" data-i18n="reset-button">Restaurar</button>
+        <button type="submit" class="button button-primary" id="save-button">Guardar</button>
       </div>
 
       <div id="statusMessage" class="status-message" style="display: none;"></div>
