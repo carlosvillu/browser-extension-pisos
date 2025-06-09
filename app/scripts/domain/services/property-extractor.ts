@@ -56,7 +56,7 @@ export class PropertyExtractor implements IPropertyExtractor {
     if (!id) return null;
 
     const priceElement = element.querySelector('.item-price');
-    const priceText = priceElement?.textContent?.replace(/[€\s]/g, '').replace('.', '') || '0';
+    const priceText = priceElement?.textContent?.replace(/[€\s]/g, '').replace(/\./g, '') || '0';
     const price = Number.parseInt(priceText, 10) || 0;
 
     const linkElement = element.querySelector('.item-link') as HTMLAnchorElement;
