@@ -105,10 +105,10 @@ Desarrollo de una extensión de navegador que analiza automáticamente la rentab
 - [x] Subtarea 4.2.4: Implementar modal responsivo con animaciones
 
 #### Tarea 4.3: Panel de configuración
-**Estado: [ ] Pendiente**
-- [ ] Subtarea 4.3.1: Permitir ajustar gastos estimados
-- [ ] Subtarea 4.3.2: Configurar umbrales de rentabilidad
-- [ ] Subtarea 4.3.3: Opciones de visualización
+**Estado: [x] Completado**
+- [x] Subtarea 4.3.1: Permitir ajustar gastos estimados
+- [x] Subtarea 4.3.2: Configurar umbrales de rentabilidad
+- [x] Subtarea 4.3.3: Opciones de visualización
 
 ### Fase 5: Optimización y Testing
 **Estado: [x] Completado**

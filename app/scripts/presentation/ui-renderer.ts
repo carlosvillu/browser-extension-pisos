@@ -1,18 +1,31 @@
 import { PropertyData, ProfitabilityAnalysis } from '../domain/interfaces';
 import { Logger } from '../infrastructure/logger';
+import { ConfigService, UserConfig } from '../domain/services/config-service';
 
 export interface IUIRenderer {
-  renderBadge(property: PropertyData, analysis: ProfitabilityAnalysis): void;
-  renderLoadingBadge(property: PropertyData): void;
+  renderBadge(property: PropertyData, analysis: ProfitabilityAnalysis): Promise<void>;
+  renderLoadingBadge(property: PropertyData): Promise<void>;
   renderNoDataBadge(property: PropertyData): void;
   renderErrorBadge(property: PropertyData): void;
   removeBadge(property: PropertyData): void;
 }
 
 export class InvestmentUIRenderer implements IUIRenderer {
-  constructor(private logger: Logger) {}
+  private configService: ConfigService;
+  private userConfig?: UserConfig;
 
-  renderBadge(property: PropertyData, analysis: ProfitabilityAnalysis): void {
+  constructor(private logger: Logger) {
+    this.configService = new ConfigService();
+  }
+
+  async renderBadge(property: PropertyData, analysis: ProfitabilityAnalysis): Promise<void> {
+    if (!this.userConfig) {
+      this.userConfig = await this.configService.getConfig();
+    }
+
+    if (!this.userConfig.displayOptions.showBadges) {
+      return;
+    }
     const propertyElement = this.findPropertyElement(property.id);
     if (!propertyElement) {
       this.logger.error(`Property element not found for ID: ${property.id}`);
@@ -32,7 +45,15 @@ export class InvestmentUIRenderer implements IUIRenderer {
     }
   }
 
-  renderLoadingBadge(property: PropertyData): void {
+  async renderLoadingBadge(property: PropertyData): Promise<void> {
+    if (!this.userConfig) {
+      this.userConfig = await this.configService.getConfig();
+    }
+
+    if (!this.userConfig.displayOptions.showLoadingStates) {
+      return;
+    }
+
     const propertyElement = this.findPropertyElement(property.id);
     if (!propertyElement) return;
 
@@ -125,11 +146,18 @@ export class InvestmentUIRenderer implements IUIRenderer {
       </div>
     `;
     
-    button.addEventListener('click', (e) => {
+    button.addEventListener('click', async (e) => {
       e.preventDefault();
       e.stopPropagation();
-      this.openAnalysisModal(property, analysis);
-      this.logger.log(`Investment modal opened for property ${property.id}`);
+      
+      if (!this.userConfig) {
+        this.userConfig = await this.configService.getConfig();
+      }
+      
+      if (this.userConfig.displayOptions.showModal) {
+        this.openAnalysisModal(property, analysis);
+        this.logger.log(`Investment modal opened for property ${property.id}`);
+      }
     });
     
     buttonContainer.appendChild(button);

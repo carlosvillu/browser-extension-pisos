@@ -129,7 +129,7 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
     };
     
     try {
-      this.uiRenderer.renderLoadingBadge(property);
+      await this.uiRenderer.renderLoadingBadge(property);
       
       const rentalUrl = this.urlGenerator.generateRentalUrl(urlAnalysis.location, property);
       this.logger.log(`Fetching rental data from: ${rentalUrl}`);
@@ -137,10 +137,10 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
       const rentalData = await this.rentalDataAnalyzer.fetchRentalData(rentalUrl);
       
       if (rentalData && rentalData.sampleSize > 0) {
-        const analysis = this.profitabilityCalculator.calculateProfitability(property, rentalData);
+        const analysis = await this.profitabilityCalculator.calculateProfitability(property, rentalData);
         this.logger.log(`Profitability analysis for ${property.id}:`, analysis);
         
-        this.uiRenderer.renderBadge(property, analysis);
+        await this.uiRenderer.renderBadge(property, analysis);
       } else {
         this.logger.log(`No rental data found for property ${property.id}`);
         this.handleMissingData(property);

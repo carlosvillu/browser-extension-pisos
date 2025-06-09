@@ -13,6 +13,8 @@ https://github.com/user-attachments/assets/587fabd5-8711-4fe7-9b61-16feb426ce65
 - 💡 **Indicadores Visuales**: Muestra botones informativos con recomendación de inversión
 - 📱 **Modal Detallado**: Información completa del análisis con un clic
 - 🔄 **Análisis Cruzado**: Compara automáticamente precios de venta vs alquiler en la misma zona
+- ⚙️ **Panel de Configuración**: Personaliza gastos, umbrales de rentabilidad y opciones de visualización
+- 🏦 **Cálculo con Hipoteca**: Incluye configuración de financiación e intereses
 
 ## 🚀 Instalación
 
@@ -56,6 +58,7 @@ app/scripts/
 │       ├── profitability-calculator.ts # Cálculos de rentabilidad
 │       ├── url-generator.ts         # Generación de URLs cruzadas
 │       ├── cache-service.ts         # Sistema de caché con TTL
+│       ├── config-service.ts        # Servicio de configuración de usuario
 │       ├── error-handler.ts         # Manejo robusto de errores
 │       ├── batch-processor.ts       # Procesamiento en lotes
 │       ├── lazy-loader.ts           # Carga perezosa con Intersection Observer
@@ -68,6 +71,7 @@ app/scripts/
 │   └── ui-renderer.ts      # Renderizado de interfaz
 ├── application/            # Coordinación de casos de uso
 │   └── investment-analyzer.ts # Coordinador principal
+├── popup.ts               # Controlador del popup de configuración
 └── content.ts             # Punto de entrada simplificado
 ```
 
@@ -155,12 +159,13 @@ graph TD
 ### Cálculo de Rentabilidad
 
 - **Rentabilidad Bruta**: `(Alquiler Anual / Precio Compra) × 100`
-- **Rentabilidad Neta**: Resta gastos estimados:
-  - Gestión inmobiliaria (9%)
-  - Seguro (0.2% valor inmueble)
-  - IBI (0.7% valor inmueble)
-  - Gastos comunidad (40-80€/mes)
-  - Vacancia y mantenimiento (5%)
+- **Rentabilidad Neta**: Resta gastos estimados (configurables):
+  - Gestión inmobiliaria (150€/mes por defecto)
+  - Seguro (50€/mes por defecto)
+  - IBI (100€/mes por defecto)
+  - Gastos comunidad (60€/mes por defecto)
+  - Vacancia (5% del alquiler por defecto)
+  - Reparaciones y contingencias (1% del alquiler por defecto)
 
 ### Recomendaciones
 
@@ -177,18 +182,60 @@ graph TD
 
 ## 🔧 Configuración y Personalización
 
-### Variables de Configuración
+### Panel de Configuración de Usuario
 
-El `ProfitabilityCalculator` acepta configuración personalizada:
+La extensión incluye un popup de configuración accesible desde el icono de la extensión con las siguientes opciones:
+
+#### **Gastos Estimados**
+- **Gestión inmobiliaria**: Coste mensual fijo (€150 por defecto)
+- **Seguro**: Coste mensual fijo (€50 por defecto)  
+- **IBI**: Coste mensual fijo (€100 por defecto)
+- **Comunidad**: Gastos de comunidad mensuales (€60 por defecto)
+- **Vacancia**: % del alquiler para periodos sin inquilino (5% por defecto)
+- **Reparaciones y contingencias**: % del alquiler para calentadores, averías, etc. (1% por defecto)
+
+#### **Configuración de Hipoteca**
+- **Financiación**: % del precio financiado (80% por defecto)
+- **Interés**: TIN anual de la hipoteca (2.45% por defecto)
+- **Gastos de gestión**: % del precio para notaría, registro, tasación (10% por defecto)
+
+#### **Umbrales de Rentabilidad**
+- **Excelente**: Rentabilidad neta mínima (6% por defecto)
+- **Buena**: Rentabilidad neta mínima (4% por defecto) 
+- **Regular**: Rentabilidad neta mínima (2% por defecto)
+
+#### **Opciones de Visualización**
+- **Mostrar indicadores**: Activar/desactivar badges de rentabilidad
+- **Permitir modal**: Activar/desactivar modal de detalles
+- **Estados de carga**: Mostrar/ocultar indicadores de carga
+
+### Configuración Programática
 
 ```typescript
-const config: ExpenseCalculationConfig = {
-  propertyManagementRate: 0.09, // 9% gestión
-  insuranceRate: 0.002, // 0.2% seguro
-  propertyTaxRate: 0.007, // 0.7% IBI
-  communityFeesWithGarage: 80, // 80€ gastos comunidad
-  communityFeesWithoutGarage: 40, // 40€ gastos comunidad
-  vacancyMaintenanceRate: 0.05, // 5% vacancia
+const config: UserConfig = {
+  expenseConfig: {
+    propertyManagementMonthly: 150, // €/mes gestión
+    insuranceMonthly: 50, // €/mes seguro  
+    propertyTaxMonthly: 100, // €/mes IBI
+    communityFees: 60, // €/mes comunidad
+    vacancyMaintenanceRate: 0.05, // 5% vacancia
+    maintenanceContingencyRate: 0.01, // 1% contingencias
+  },
+  mortgageConfig: {
+    loanToValueRatio: 0.80, // 80% financiación
+    interestRate: 2.45, // 2.45% TIN
+    managementFeesRate: 0.10, // 10% gastos gestión
+  },
+  profitabilityThresholds: {
+    excellent: 6, // 6% rentabilidad excelente
+    good: 4, // 4% rentabilidad buena  
+    fair: 2, // 2% rentabilidad regular
+  },
+  displayOptions: {
+    showBadges: true,
+    showModal: true,
+    showLoadingStates: true,
+  }
 };
 ```
 
@@ -257,10 +304,11 @@ npm run test:coverage
 - [x] **Manejo robusto de errores con retry automático**
 - [x] **Testing y validación automática**
 - [x] **Monitoreo de rendimiento en tiempo real**
+- [x] **Panel de configuración completo con popup**
+- [x] **Configuración de hipoteca y gastos personalizables**
 
 ### 🔄 En Progreso
 
-- [ ] Panel de configuración de usuario
 - [ ] Internacionalización
 
 ### 📅 Futuro

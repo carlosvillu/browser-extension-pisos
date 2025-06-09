@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuración - Análisis de Inversión</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 320px;
+      min-height: 400px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+
+    .popup-header {
+      background: #2d3436;
+      color: white;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .popup-header h1 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .popup-content {
+      padding: 16px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #2d3436;
+      border-bottom: 1px solid #e1e5e9;
+      padding-bottom: 4px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: #636e72;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 13px;
+      background: white;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #0984e3;
+      box-shadow: 0 0 0 2px rgba(9, 132, 227, 0.1);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .checkbox {
+      width: 16px;
+      height: 16px;
+    }
+
+    .checkbox-label {
+      font-size: 12px;
+      color: #636e72;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .button {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .button-primary {
+      background: #0984e3;
+      color: white;
+    }
+
+    .button-primary:hover {
+      background: #0770c1;
+    }
+
+    .button-secondary {
+      background: #ddd;
+      color: #636e72;
+    }
+
+    .button-secondary:hover {
+      background: #ccc;
+    }
+
+    .status-message {
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .status-success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .status-error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .help-text {
+      font-size: 11px;
+      color: #636e72;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="popup-header">
+    <h1>Configuración de Análisis</h1>
+  </div>
+
+  <div class="popup-content">
+    <form id="configForm">
+      <div class="section">
+        <div class="section-title">Gastos Estimados</div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="propertyManagement">Gestión inmobiliaria (€)</label>
+            <input type="number" id="propertyManagement" class="form-input" min="0" max="1000" step="1">
+            <div class="help-text">Coste mensual fijo</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="insurance">Seguro (€)</label>
+            <input type="number" id="insurance" class="form-input" min="0" max="200" step="1">
+            <div class="help-text">Coste mensual fijo</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="propertyTax">IBI (€)</label>
+            <input type="number" id="propertyTax" class="form-input" min="0" max="500" step="1">
+            <div class="help-text">Coste mensual fijo</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="vacancyMaintenance">Vacancia (%)</label>
+            <input type="number" id="vacancyMaintenance" class="form-input" min="0" max="20" step="0.1">
+            <div class="help-text">% del alquiler</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="maintenanceContingency">Reparaciones y contingencias (%)</label>
+          <input type="number" id="maintenanceContingency" class="form-input" min="0" max="25" step="0.1">
+          <div class="help-text">% del alquiler para calentadores, averías, mejoras, etc.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="communityFees">Comunidad (€)</label>
+          <input type="number" id="communityFees" class="form-input" min="0" max="500" step="1">
+          <div class="help-text">Gastos de comunidad mensual</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Configuración de Hipoteca</div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="loanToValue">Financiación (%)</label>
+            <input type="number" id="loanToValue" class="form-input" min="0" max="100" step="1">
+            <div class="help-text">% del precio financiado</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="interestRate">Interés (%)</label>
+            <input type="number" id="interestRate" class="form-input" min="0" max="10" step="0.01">
+            <div class="help-text">TIN anual de la hipoteca</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="managementFees">Gastos de gestión (%)</label>
+          <input type="number" id="managementFees" class="form-input" min="0" max="20" step="0.1">
+          <div class="help-text">% del precio de compra (notaría, registro, tasación, etc.)</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Umbrales de Rentabilidad</div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="excellentThreshold">Excelente (%)</label>
+            <input type="number" id="excellentThreshold" class="form-input" min="0" max="20" step="0.1">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="goodThreshold">Buena (%)</label>
+            <input type="number" id="goodThreshold" class="form-input" min="0" max="20" step="0.1">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fairThreshold">Regular (%)</label>
+            <input type="number" id="fairThreshold" class="form-input" min="0" max="20" step="0.1">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Opciones de Visualización</div>
+        
+        <div class="checkbox-group">
+          <input type="checkbox" id="showBadges" class="checkbox">
+          <label for="showBadges" class="checkbox-label">Mostrar indicadores de rentabilidad</label>
+        </div>
+        
+        <div class="checkbox-group">
+          <input type="checkbox" id="showModal" class="checkbox">
+          <label for="showModal" class="checkbox-label">Permitir modal de detalles</label>
+        </div>
+        
+        <div class="checkbox-group">
+          <input type="checkbox" id="showLoadingStates" class="checkbox">
+          <label for="showLoadingStates" class="checkbox-label">Mostrar estados de carga</label>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="resetButton" class="button button-secondary">Restaurar</button>
+        <button type="submit" class="button button-primary">Guardar</button>
+      </div>
+
+      <div id="statusMessage" class="status-message" style="display: none;"></div>
+    </form>
+  </div>
+
+  <script src="scripts/popup.js"></script>
+</body>
+</html>
