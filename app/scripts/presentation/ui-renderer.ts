@@ -259,6 +259,11 @@ class ModalRenderer {
               <span class="investment-modal__value">${this.languageService.formatCurrency(analysis.monthlyExpenses)}</span>
             </div>
             
+            <div class="investment-modal__detail-item">
+              <span class="investment-modal__label">${this.languageService.getMessage('monthlyMortgageEstimate')}</span>
+              <span class="investment-modal__value">${this.languageService.formatCurrency(analysis.monthlyMortgage)}</span>
+            </div>
+            
             <div class="investment-modal__divider"></div>
             
             <div class="investment-modal__detail-item">

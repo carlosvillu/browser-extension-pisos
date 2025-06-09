@@ -207,6 +207,10 @@
     "message": "Gastos mensuales estimados",
     "description": "Etiqueta gastos mensuales"
   },
+  "monthlyMortgageEstimate": {
+    "message": "Hipoteca mensual estimada",
+    "description": "Etiqueta hipoteca mensual"
+  },
   "grossAnnualProfitability": {
     "message": "Rentabilidad bruta anual",
     "description": "Etiqueta rentabilidad bruta"

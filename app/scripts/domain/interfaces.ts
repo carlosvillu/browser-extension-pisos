@@ -34,6 +34,7 @@ export interface ProfitabilityAnalysis {
   grossYield: number;
   netYield: number;
   monthlyExpenses: number;
+  monthlyMortgage: number;
   recommendation: 'excellent' | 'good' | 'fair' | 'poor';
   riskLevel: 'low' | 'medium' | 'high';
 }
