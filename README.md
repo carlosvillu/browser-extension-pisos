@@ -2,9 +2,7 @@
 
 Una extensión de navegador que analiza automáticamente la rentabilidad de propiedades inmobiliarias en Idealista.com comparando precios de compra con potenciales ingresos por alquiler.
 
-
-https://github.com/user-attachments/assets/587fabd5-8711-4fe7-9b61-16feb426ce65
-
+https://github.com/user-attachments/assets/652f5456-452d-4a7a-88d5-5948f5e4150c
 
 ## ✨ Características
 
