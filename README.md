@@ -16,7 +16,6 @@ https://github.com/user-attachments/assets/587fabd5-8711-4fe7-9b61-16feb426ce65
 - ⚙️ **Panel de Configuración**: Personaliza gastos, umbrales de rentabilidad y opciones de visualización
 - 🏦 **Cálculo con Hipoteca**: Incluye configuración de financiación e intereses
 - 🌍 **Soporte Multiidioma**: Interfaz en Español e Inglés con selector de idioma
-- ✨ **Animaciones Suaves**: Efectos visuales fluidos con entrada escalonada y feedback táctil
 
 ## 🚀 Instalación
 
@@ -152,15 +151,6 @@ graph TD
 - **Batch Processing**: Agrupa propiedades similares para reducir peticiones
 - **DOM Optimization**: Batching de operaciones DOM para minimizar reflows
 - **Performance Monitoring**: Métricas de rendimiento en tiempo real
-
-### Mejoras de Experiencia de Usuario
-
-- **Animaciones de Entrada**: Efectos `slideInUp` suaves con retrasos escalonados
-- **Feedback Táctil**: Efectos ripple en botones con transiciones cubic-bezier
-- **Estados de Carga Mejorados**: Spinners animados con efectos shimmer
-- **Micro-interacciones**: Hover states optimizados y feedback visual inmediato
-- **Modal Animations**: Animaciones fluidas de apertura con backdrop blur
-- **Error Feedback**: Animaciones de shake para estados de error
 
 ### Manejo Robusto de Errores
 
@@ -325,11 +315,10 @@ npm run test:coverage
 - [x] **Panel de configuración completo con popup**
 - [x] **Configuración de hipoteca y gastos personalizables**
 - [x] **Internacionalización completa con soporte para Español e Inglés**
-- [x] **Mejoras de UX con animaciones suaves y feedback visual**
 
 ### 🔄 En Progreso
 
-- [ ] Documentación técnica
+- [ ] Mejoras de UX adicionales
 
 ### 📅 Futuro
 
