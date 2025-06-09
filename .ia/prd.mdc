@@ -62,10 +62,10 @@ Desarrollo de una extensión de navegador que analiza automáticamente la rentab
 - [x] Subtarea 2.2.3: Validar URLs generadas
 
 #### Tarea 2.3: Sistema de caché de datos
-**Estado: [ ] Pendiente**
-- [ ] Subtarea 2.3.1: Implementar almacenamiento local de datos extraídos
-- [ ] Subtarea 2.3.2: Sistema de expiración de caché
-- [ ] Subtarea 2.3.3: Optimización de consultas repetidas
+**Estado: [x] Completado**
+- [x] Subtarea 2.3.1: Implementar almacenamiento local de datos extraídos
+- [x] Subtarea 2.3.2: Sistema de expiración de caché con TTL
+- [x] Subtarea 2.3.3: Optimización de consultas repetidas con message passing
 
 ### Fase 3: Análisis de Rentabilidad
 **Estado: [x] Completado**
@@ -174,6 +174,8 @@ Desarrollo de una extensión de navegador que analiza automáticamente la rentab
 - Manejar cambios en estructura DOM del sitio
 - Mantener extensión ligera y eficiente
 - Privacidad: no almacenar datos personales
+- Message passing entre content script y background para storage API
+- Arquitectura SOLID para mantenibilidad y escalabilidad
 
 ---
 

@@ -6,10 +6,10 @@ import { IRentalDataAnalyzer, RentalDataAnalyzer } from '../domain/services/rent
 import { IProfitabilityCalculator, ProfitabilityCalculator } from '../domain/services/profitability-calculator';
 import { IUrlGenerator, CrossReferenceUrlGenerator } from '../domain/services/url-generator';
 import { IUIRenderer, InvestmentUIRenderer } from '../presentation/ui-renderer';
-import { ICacheService, RentalDataCacheService } from '../domain/services/cache-service';
+import { ICacheService } from '../domain/services/cache-service';
+import { ContentCacheService } from '../domain/services/content-cache-service';
 import { IErrorHandler, RobustErrorHandler } from '../domain/services/error-handler';
-import { IBatchProcessor, PropertyBatchProcessor } from '../domain/services/batch-processor';
-import { ILazyLoader, IntersectionLazyLoader } from '../domain/services/lazy-loader';
+import { SimpleLazyLoader, IntersectionSimpleLazyLoader } from '../domain/services/simple-lazy-loader';
 
 export interface IInvestmentAnalyzer {
   initialize(): void;
@@ -25,14 +25,13 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
   private uiRenderer: IUIRenderer;
   private cacheService: ICacheService;
   private errorHandler: IErrorHandler;
-  private batchProcessor: IBatchProcessor;
-  private lazyLoader: ILazyLoader;
+  private lazyLoader: SimpleLazyLoader;
 
   constructor() {
     this.logger = new Logger('IdealistaInvestmentAnalyzer');
     this.urlAnalyzer = new UrlAnalyzer(this.logger);
     this.propertyExtractor = new PropertyExtractor(this.logger);
-    this.cacheService = new RentalDataCacheService(this.logger);
+    this.cacheService = new ContentCacheService(this.logger);
     this.errorHandler = new RobustErrorHandler(this.logger);
     this.rentalDataAnalyzer = new RentalDataAnalyzer(
       this.logger, 
@@ -42,9 +41,8 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
     );
     this.profitabilityCalculator = new ProfitabilityCalculator(this.logger);
     this.urlGenerator = new CrossReferenceUrlGenerator(this.logger);
-    this.batchProcessor = new PropertyBatchProcessor(this.logger, this.urlGenerator);
     this.uiRenderer = new InvestmentUIRenderer(this.logger);
-    this.lazyLoader = new IntersectionLazyLoader(this.logger);
+    this.lazyLoader = new IntersectionSimpleLazyLoader(this.logger);
   }
 
   initialize(): void {
@@ -86,14 +84,14 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
       return;
     }
 
-    // Use lazy loading to analyze properties only when they come into view
+    // Use lazy loading to prevent overwhelming Idealista
     const propertyElements = properties.map(property => {
       const element = document.querySelector(`article.item[data-element-id="${property.id}"]`);
       return { property, element };
     }).filter(item => item.element !== null);
 
     if (propertyElements.length === 0) {
-      this.logger.error('No property elements found for lazy loading, falling back to immediate processing');
+      this.logger.log('No property elements found, processing directly with delays');
       this.processBatch(properties, urlAnalysis);
       return;
     }
@@ -105,19 +103,15 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
       if (propertyData) {
         this.analyzePropertyProfitability(propertyData, urlAnalysis);
       }
-    }, {
-      rootMargin: '100px',
-      threshold: 0.1,
-      delay: 200
     });
   }
 
   private async processBatch(properties: PropertyData[], urlAnalysis: UrlAnalysisResult): Promise<void> {
-    this.logger.log('Processing properties in batch mode');
+    this.logger.log('Processing properties in batch mode with delays');
     
     for (const property of properties) {
       await this.analyzePropertyProfitability(property, urlAnalysis);
-      await this.delay(500); // Small delay between properties
+      await this.delay(2000); // 2 second delay between properties to avoid rate limiting
     }
   }
 
