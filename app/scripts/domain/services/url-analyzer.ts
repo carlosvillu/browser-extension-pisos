@@ -54,7 +54,11 @@ export class UrlAnalyzer implements IUrlAnalyzer {
   }
 
   private extractLocationFromUrl(pathname: string): string | null {
-    const match = pathname.match(/\/(venta|alquiler)-viviendas\/([^/]+)/);
-    return match ? match[2] : null;
+    const match = pathname.match(/\/(venta|alquiler)-viviendas\/(.+?)(?:\/pagina-\d+\.htm|\?|$)/);
+    if (match) {
+      // Remove trailing slash if present
+      return match[2].replace(/\/$/, '');
+    }
+    return null;
   }
 }
