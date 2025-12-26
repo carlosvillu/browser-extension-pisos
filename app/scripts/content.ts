@@ -10,7 +10,7 @@ async function initializeAnalyzer() {
   await languageService.initialize();
 
   analyzer = new IdealistaInvestmentAnalyzer(languageService);
-  analyzer.initialize();
+  await analyzer.initialize();
 }
 
 if (document.readyState === "loading") {
@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "LANGUAGE_CHANGED") {
     console.log('Processing language change to:', message.language);
     // Update language service
-    languageService.loadLanguageFromStorage().then(() => {
+    languageService.loadLanguageFromStorage().then(async () => {
       console.log('Language service updated, current language:', languageService.getLanguage());
       // Clear existing badges
       const existingBadges = document.querySelectorAll("[data-property-id]");
@@ -38,7 +38,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.log('Re-initializing analyzer with new language');
         // Create new analyzer instance with updated language service
         analyzer = new IdealistaInvestmentAnalyzer(languageService);
-        analyzer.initialize();
+        await analyzer.initialize();
       }
     });
   }

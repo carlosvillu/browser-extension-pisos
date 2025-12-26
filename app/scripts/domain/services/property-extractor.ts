@@ -1,5 +1,5 @@
 import type { Logger } from '../../infrastructure/logger';
-import type { PropertyData } from '../interfaces';
+import { PropertyType, type PropertyData } from '../interfaces';
 
 export interface IPropertyExtractor {
   extractPropertiesFromPage(): PropertyData[];
@@ -92,6 +92,9 @@ export class PropertyExtractor implements IPropertyExtractor {
 
     const location = this.extractLocationFromTitle(title);
 
+    const propertyType = this.detectPropertyType(title, element);
+    const hasElevator = this.detectElevator(element);
+
     return {
       id,
       title,
@@ -100,6 +103,8 @@ export class PropertyExtractor implements IPropertyExtractor {
       size,
       floor,
       hasGarage,
+      hasElevator,
+      propertyType,
       description,
       url,
       tags,
@@ -113,5 +118,54 @@ export class PropertyExtractor implements IPropertyExtractor {
       return parts[parts.length - 2].trim();
     }
     return '';
+  }
+
+  private detectPropertyType(title: string, element: HTMLElement): PropertyType | null {
+    const titleLower = title.toLowerCase();
+    const tagElements = element.querySelectorAll('.item-tags span, .item-highlight');
+    const tagsText = Array.from(tagElements).map((t) => t.textContent?.toLowerCase() || '');
+    const descriptionElement = element.querySelector('.item-description .ellipsis');
+    const description = descriptionElement?.textContent?.toLowerCase() || '';
+    const allText = `${titleLower} ${tagsText.join(' ')} ${description}`;
+
+    if (allText.includes('ático') || allText.includes('atico') || allText.includes('ático')) {
+      return PropertyType.PENTHOUSE;
+    }
+    if (allText.includes('dúplex') || allText.includes('duplex') || allText.includes('dúplex')) {
+      return PropertyType.DUPLEX;
+    }
+    if (allText.includes('estudio') || allText.includes('loft')) {
+      return PropertyType.STUDIO;
+    }
+    if (allText.includes('bajo') || allText.includes('planta baja')) {
+      return PropertyType.GROUND_FLOOR;
+    }
+
+    return PropertyType.FLAT;
+  }
+
+  private detectElevator(element: HTMLElement): boolean {
+    const details = element.querySelectorAll('.item-detail, .item-tags span');
+
+    for (const detail of Array.from(details)) {
+      const text = detail.textContent?.toLowerCase() || '';
+      if (text.includes('ascensor') || text.includes('con ascensor')) {
+        return true;
+      }
+      if (text.includes('sin ascensor')) {
+        return false;
+      }
+    }
+
+    const descriptionElement = element.querySelector('.item-description .ellipsis');
+    const description = descriptionElement?.textContent?.toLowerCase() || '';
+    if (description.includes('con ascensor') || description.includes('tiene ascensor')) {
+      return true;
+    }
+    if (description.includes('sin ascensor') || description.includes('no tiene ascensor')) {
+      return false;
+    }
+
+    return false;
   }
 }

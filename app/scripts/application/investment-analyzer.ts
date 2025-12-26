@@ -1,6 +1,7 @@
 import type { PropertyData, UrlAnalysisResult } from '../domain/interfaces';
 import type { ICacheService } from '../domain/services/cache-service';
 import { ContentCacheService } from '../domain/services/content-cache-service';
+import { ConfigService } from '../domain/services/config-service';
 import { type IErrorHandler, RobustErrorHandler } from '../domain/services/error-handler';
 import { type IProfitabilityCalculator, ProfitabilityCalculator } from '../domain/services/profitability-calculator';
 import { type IPropertyExtractor, PropertyExtractor } from '../domain/services/property-extractor';
@@ -13,7 +14,7 @@ import { type IUIRenderer, InvestmentUIRenderer } from '../presentation/ui-rende
 import { LanguageService } from '../domain/services/language-service';
 
 export interface IInvestmentAnalyzer {
-  initialize(): void;
+  initialize(): Promise<void>;
 }
 
 export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
@@ -27,6 +28,7 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
   private cacheService: ICacheService;
   private errorHandler: IErrorHandler;
   private lazyLoader: SimpleLazyLoader;
+  private configService: ConfigService;
 
   constructor(private languageService: LanguageService) {
     this.logger = new Logger('IdealistaInvestmentAnalyzer');
@@ -34,6 +36,7 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
     this.propertyExtractor = new PropertyExtractor(this.logger);
     this.cacheService = new ContentCacheService(this.logger);
     this.errorHandler = new RobustErrorHandler(this.logger);
+    this.configService = new ConfigService();
     this.rentalDataAnalyzer = new RentalDataAnalyzer(
       this.logger,
       this.propertyExtractor,
@@ -43,14 +46,17 @@ export class IdealistaInvestmentAnalyzer implements IInvestmentAnalyzer {
     this.profitabilityCalculator = new ProfitabilityCalculator(this.logger);
     this.urlGenerator = new CrossReferenceUrlGenerator(this.logger);
     this.uiRenderer = new InvestmentUIRenderer(
-      this.logger, 
+      this.logger,
       this.languageService
     );
     this.lazyLoader = new IntersectionSimpleLazyLoader(this.logger);
   }
 
-  initialize(): void {
+  async initialize(): Promise<void> {
     this.logger.log('Initializing Idealista Investment Analyzer');
+
+    const config = await this.configService.getConfig();
+    this.urlGenerator = new CrossReferenceUrlGenerator(this.logger, config.searchFilters);
 
     if (this.urlAnalyzer.isIdealistaPropertyPage()) {
       this.logger.log('Idealista property page detected');

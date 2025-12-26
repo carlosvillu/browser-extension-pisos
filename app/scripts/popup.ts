@@ -58,6 +58,11 @@ class PopupController {
       showBadges: document.getElementById('showBadges') as HTMLInputElement,
       showModal: document.getElementById('showModal') as HTMLInputElement,
       showLoadingStates: document.getElementById('showLoadingStates') as HTMLInputElement,
+      surfaceTolerance: document.getElementById('surfaceTolerance') as HTMLInputElement,
+      includePropertyType: document.getElementById('includePropertyType') as HTMLInputElement,
+      includeGarage: document.getElementById('includeGarage') as HTMLInputElement,
+      includeElevator: document.getElementById('includeElevator') as HTMLInputElement,
+      includeRooms: document.getElementById('includeRooms') as HTMLInputElement,
     };
 
     elements.propertyManagement.value = config.expenseConfig.propertyManagementMonthly.toString();
@@ -78,6 +83,12 @@ class PopupController {
     elements.showBadges.checked = config.displayOptions.showBadges;
     elements.showModal.checked = config.displayOptions.showModal;
     elements.showLoadingStates.checked = config.displayOptions.showLoadingStates;
+
+    elements.surfaceTolerance.value = (config.searchFilters.surfaceTolerancePercent * 100).toString();
+    elements.includePropertyType.checked = config.searchFilters.includePropertyType;
+    elements.includeGarage.checked = config.searchFilters.includeGarage;
+    elements.includeElevator.checked = config.searchFilters.includeElevator;
+    elements.includeRooms.checked = config.searchFilters.includeRooms;
   }
 
   private attachEventListeners(): void {
@@ -168,6 +179,13 @@ class PopupController {
         showModal: getCheckboxValue('showModal'),
         showLoadingStates: getCheckboxValue('showLoadingStates'),
       },
+      searchFilters: {
+        surfaceTolerancePercent: Number.parseFloat(getInputValue('surfaceTolerance')) / 100,
+        includePropertyType: getCheckboxValue('includePropertyType'),
+        includeGarage: getCheckboxValue('includeGarage'),
+        includeElevator: getCheckboxValue('includeElevator'),
+        includeRooms: getCheckboxValue('includeRooms'),
+      },
     };
   }
 
@@ -232,6 +250,13 @@ class PopupController {
       'show-badges-label': 'showProfitabilityIndicators',
       'show-modal-label': 'allowDetailsModal',
       'show-loading-states-label': 'showLoadingStates',
+      'search-filters-title': 'searchFiltersTitle',
+      'surface-tolerance-label': 'surfaceToleranceLabel',
+      'surface-tolerance-help': 'surfaceToleranceHelp',
+      'include-property-type-label': 'includePropertyTypeLabel',
+      'include-garage-label': 'includeGarageLabel',
+      'include-elevator-label': 'includeElevatorLabel',
+      'include-rooms-label': 'includeRoomsLabel',
       'save-button': 'saveButton',
     };
 

@@ -284,20 +284,50 @@
 
       <div class="section">
         <div class="section-title" id="display-options-title">Opciones de Visualización</div>
-        
+
         <div class="checkbox-group">
           <input type="checkbox" id="showBadges" class="checkbox">
           <label for="showBadges" class="checkbox-label" id="show-badges-label">Mostrar indicadores de rentabilidad</label>
         </div>
-        
+
         <div class="checkbox-group">
           <input type="checkbox" id="showModal" class="checkbox">
           <label for="showModal" class="checkbox-label" id="show-modal-label">Permitir modal de detalles</label>
         </div>
-        
+
         <div class="checkbox-group">
           <input type="checkbox" id="showLoadingStates" class="checkbox">
           <label for="showLoadingStates" class="checkbox-label" id="show-loading-states-label">Mostrar estados de carga</label>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title" id="search-filters-title">Filtros de Búsqueda</div>
+
+        <div class="form-group">
+          <label class="form-label" for="surfaceTolerance" id="surface-tolerance-label">Tolerancia de superficie (%)</label>
+          <input type="number" id="surfaceTolerance" class="form-input" min="5" max="50" step="1">
+          <div class="help-text" id="surface-tolerance-help">Rango de búsqueda: ±% del tamaño original (15% recomendado)</div>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="includePropertyType" class="checkbox">
+          <label for="includePropertyType" class="checkbox-label" id="include-property-type-label">Filtrar por tipo de propiedad (ático, dúplex, estudio)</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="includeGarage" class="checkbox">
+          <label for="includeGarage" class="checkbox-label" id="include-garage-label">Filtrar por garaje</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="includeElevator" class="checkbox">
+          <label for="includeElevator" class="checkbox-label" id="include-elevator-label">Filtrar por ascensor</label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="includeRooms" class="checkbox">
+          <label for="includeRooms" class="checkbox-label" id="include-rooms-label">Filtrar por número de habitaciones</label>
         </div>
       </div>
 

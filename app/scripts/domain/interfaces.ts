@@ -1,3 +1,11 @@
+export enum PropertyType {
+  FLAT = 'flat',
+  PENTHOUSE = 'penthouse',
+  DUPLEX = 'duplex',
+  STUDIO = 'studio',
+  GROUND_FLOOR = 'ground'
+}
+
 export interface UrlAnalysisResult {
   isIdealista: boolean;
   searchType: 'venta' | 'alquiler' | null;
@@ -13,6 +21,8 @@ export interface PropertyData {
   size: number | null;
   floor: string | null;
   hasGarage: boolean;
+  hasElevator: boolean;
+  propertyType: PropertyType | null;
   description: string;
   url: string;
   tags: string[];

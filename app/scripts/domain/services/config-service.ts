@@ -3,6 +3,7 @@ export interface UserConfig {
   mortgageConfig: MortgageConfig;
   profitabilityThresholds: ProfitabilityThresholds;
   displayOptions: DisplayOptions;
+  searchFilters: SearchFilters;
 }
 
 export interface ExpenseConfig {
@@ -32,6 +33,14 @@ export interface DisplayOptions {
   showLoadingStates: boolean;
 }
 
+export interface SearchFilters {
+  surfaceTolerancePercent: number;
+  includePropertyType: boolean;
+  includeGarage: boolean;
+  includeElevator: boolean;
+  includeRooms: boolean;
+}
+
 export class ConfigService {
   private static readonly STORAGE_KEY = 'investmentAnalysisConfig';
 
@@ -58,6 +67,13 @@ export class ConfigService {
       showBadges: true,
       showModal: true,
       showLoadingStates: true,
+    },
+    searchFilters: {
+      surfaceTolerancePercent: 0.15,
+      includePropertyType: true,
+      includeGarage: true,
+      includeElevator: false,
+      includeRooms: true,
     },
   };
 
